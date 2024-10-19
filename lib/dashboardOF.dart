@@ -4,12 +4,12 @@ import 'juegos.dart';
 import 'relax.dart';
 import 'senderismo.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreenOF extends StatefulWidget {
   @override
-  _DashboardScreen createState() => _DashboardScreen();
+  _DashboardScreenOF createState() => _DashboardScreenOF();
 }
 
-class _DashboardScreen extends State<DashboardScreen> {
+class _DashboardScreenOF extends State<DashboardScreenOF> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'Bienvenido Usuario',
+                    'Bienvenido',
                     style: TextStyle(
                       fontSize: 32, // Aumentar el tamaño del texto
                       color: Colors.white,

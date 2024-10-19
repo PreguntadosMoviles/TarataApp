@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; // Asegúrate de crear este archivo
-import 'dashboard.dart'; // Asegúrate de crear este archivo
-import 'registro.dart'; // Asegúrate de crear este archivo
+import 'login.dart'; 
+import 'dashboard.dart'; 
+import 'registro.dart'; 
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:async'; // Import necesario para el temporizador
+import 'dart:async'; 
 
 void main() {
   runApp(MyApp());
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _controller;
   late PageController _pageController;
   int _currentPage = 0;
-  final List<String> _texts = ['WELCOME TO\nTARATA', 'BIENVENIDO A\nTARATA', 'KAMISARAKI\nTARATA']; // Inglés, español, aymara
+  final List<String> _texts = ['WELCOME TO\nTARATA', 'BIENVENIDO A\nTARATA', 'KAMISARAKI\nTARATA']; 
 
   @override
   void initState() {

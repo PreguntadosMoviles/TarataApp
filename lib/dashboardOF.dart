@@ -214,28 +214,6 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
               ],
             ),
             const SizedBox(height: 20), // Espacio entre las filas
-
-            // Botón de Cerrar Sesión
-            SizedBox(
-              width: double.infinity, // Ocupa todo el ancho
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Cierra sesión y regresa
-                },
-                child: const Text(
-                  'Cerrar Sesión',
-                  style: TextStyle(
-                    color: Colors.white, // Color del texto cambiado a blanco
-                    fontWeight: FontWeight.bold, // Texto en negrita
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.redAccent, // Color del botón
-                  shape: const BeveledRectangleBorder(), // Bordes sin redondear
-                ),
-              ),
-            ),
           ],
         ),
       ),

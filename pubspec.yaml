@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  video_player: ^2.5.1  # Asegúrate de usar la última versión disponible
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +21,6 @@ flutter:
 
   assets:
     - assets/images/
-
+    - assets/videos/ # Aquí se agrega el video a los assets
 
 

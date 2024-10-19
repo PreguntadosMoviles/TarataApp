@@ -4,12 +4,12 @@ import 'juegos.dart';
 import 'relax.dart';
 import 'senderismo.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreenOF extends StatefulWidget {
   @override
-  _DashboardScreen createState() => _DashboardScreen();
+  _DashboardScreenOF createState() => _DashboardScreenOF();
 }
 
-class _DashboardScreen extends State<DashboardScreen> {
+class _DashboardScreenOF extends State<DashboardScreenOF> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'Bienvenido Usuario',
+                    'Bienvenido',
                     style: TextStyle(
                       fontSize: 32, // Aumentar el tamaño del texto
                       color: Colors.white,
@@ -214,28 +214,6 @@ class _DashboardScreen extends State<DashboardScreen> {
               ],
             ),
             const SizedBox(height: 20), // Espacio entre las filas
-
-            // Botón de Cerrar Sesión
-            SizedBox(
-              width: double.infinity, // Ocupa todo el ancho
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Cierra sesión y regresa
-                },
-                child: const Text(
-                  'Cerrar Sesión',
-                  style: TextStyle(
-                    color: Colors.white, // Color del texto cambiado a blanco
-                    fontWeight: FontWeight.bold, // Texto en negrita
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.redAccent, // Color del botón
-                  shape: const BeveledRectangleBorder(), // Bordes sin redondear
-                ),
-              ),
-            ),
           ],
         ),
       ),

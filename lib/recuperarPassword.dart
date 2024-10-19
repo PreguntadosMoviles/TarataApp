@@ -3,7 +3,8 @@ import 'login.dart'; // Asegúrate de tener este archivo creado e importado
 
 class RecuperarPasswordScreen extends StatefulWidget {
   @override
-  _RecuperarPasswordScreenState createState() => _RecuperarPasswordScreenState();
+  _RecuperarPasswordScreenState createState() =>
+      _RecuperarPasswordScreenState();
 }
 
 class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
@@ -91,8 +92,10 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                     // Botón de cambiar contraseña
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF3AAF7F), // Verde personalizado
-                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                        backgroundColor:
+                            Color(0xFF3AAF7F), // Verde personalizado
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -117,8 +120,10 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                     // Botón de volver
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF406E5B), // Verde oscuro personalizado
-                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                        backgroundColor:
+                            Color(0xFF406E5B), // Verde oscuro personalizado
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -128,7 +133,8 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()), // Redirige al login
+                              builder: (context) =>
+                                  LoginScreen()), // Redirige al login
                         );
                       },
                       child: Text(
@@ -152,7 +158,8 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
 
   // Método para construir los campos de texto con validación
   Widget _buildTextField(String hintText, FormFieldValidator<String>? validator,
-      FormFieldSetter<String>? onSaved, {bool isPassword = false}) {
+      FormFieldSetter<String>? onSaved,
+      {bool isPassword = false}) {
     return TextFormField(
       obscureText: isPassword,
       style: TextStyle(color: Colors.black),
@@ -176,7 +183,8 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
   void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false, // Evita que se cierre al tocar fuera del diálogo
+      barrierDismissible:
+          false, // Evita que se cierre al tocar fuera del diálogo
       builder: (BuildContext context) {
         return Center(
           child: AlertDialog(

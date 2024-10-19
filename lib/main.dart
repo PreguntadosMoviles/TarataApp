@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; 
-import 'dashboard.dart'; 
-import 'registro.dart'; 
+import 'login.dart';
+import 'dashboard.dart';
+import 'dashboardOF.dart';
+import 'registro.dart';
 import 'ruta.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:async'; 
+import 'dart:async';
 
 void main() {
   runApp(MyApp());
@@ -32,21 +33,26 @@ class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _controller;
   late PageController _pageController;
   int _currentPage = 0;
-  final List<String> _texts = ['WELCOME TO\nTARATA', 'BIENVENIDO A\nTARATA', 'KAMISARAKI\nTARATA']; 
+  final List<String> _texts = [
+    'WELCOME TO\nTARATA',
+    'BIENVENIDO A\nTARATA',
+    'KAMISARAKI\nTARATA'
+  ];
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
-    
+
     _controller = VideoPlayerController.asset('assets/videos/background.mp4')
       ..initialize().then((_) {
         // Reproducir el video en loop cuando esté listo
         _controller.setLooping(true);
         _controller.play();
-        setState(() {}); // Actualizamos el estado cuando el video está inicializado
+        setState(
+            () {}); // Actualizamos el estado cuando el video está inicializado
       });
-    
+
     // Temporizador para cambiar las páginas automáticamente cada 5 segundos
     Timer.periodic(Duration(seconds: 5), (Timer timer) {
       if (_currentPage < 2) {
@@ -73,8 +79,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     // Definir los colores personalizados
-    final Color iniciarSesionColor = Color(0xFF3AAF7F); // Verde claro para "Iniciar Sesión"
-    final Color modoDesconectadoColor = Color(0xFF406E5B); // Verde oscuro para "Ingresar en modo desconectado"
+    final Color iniciarSesionColor =
+        Color(0xFF3AAF7F); // Verde claro para "Iniciar Sesión"
+    final Color modoDesconectadoColor =
+        Color(0xFF406E5B); // Verde oscuro para "Ingresar en modo desconectado"
 
     return Scaffold(
       body: Stack(
@@ -84,22 +92,28 @@ class _SplashScreenState extends State<SplashScreen> {
             child: _controller.value.isInitialized
                 ? Stack(
                     children: [
-                      VideoPlayer(_controller), // Video que cubre toda la pantalla
+                      VideoPlayer(
+                          _controller), // Video que cubre toda la pantalla
                       // Contenedor con opacidad encima del video
                       Container(
-                        color: Colors.black.withOpacity(0.5), // Ajusta el valor de opacidad aquí
+                        color: Colors.black.withOpacity(
+                            0.5), // Ajusta el valor de opacidad aquí
                       ),
                     ],
                   )
-                : Container(color: Colors.black), // Muestra un fondo negro mientras carga el video
+                : Container(
+                    color: Colors
+                        .black), // Muestra un fondo negro mientras carga el video
           ),
           // Contenido centrado
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0), // Padding lateral
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 32.0), // Padding lateral
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center, // Centrar todo horizontalmente
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Centrar todo horizontalmente
                 children: [
                   // Carrusel de texto
                   Container(
@@ -124,24 +138,32 @@ class _SplashScreenState extends State<SplashScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 30), // Reducir el espaciado entre el título y la frase
+                  SizedBox(
+                      height:
+                          30), // Reducir el espaciado entre el título y la frase
                   Text(
                     'Ingresa para poder conocer las maravillas de Tarata.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16, // Reducir ligeramente el tamaño de la fuente
+                      fontSize:
+                          16, // Reducir ligeramente el tamaño de la fuente
                       color: Colors.white,
                       fontFamily: 'Roboto',
                     ),
                   ),
-                  SizedBox(height: 20), // Reducir el espaciado entre la frase y el botón de iniciar sesión
+                  SizedBox(
+                      height:
+                          20), // Reducir el espaciado entre la frase y el botón de iniciar sesión
                   // Botón de "Iniciar Sesión"
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: iniciarSesionColor,
-                      padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12), // Reducir el padding del botón
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 35,
+                          vertical: 12), // Reducir el padding del botón
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25), // Botón redondeado
+                        borderRadius:
+                            BorderRadius.circular(25), // Botón redondeado
                       ),
                     ),
                     onPressed: () {
@@ -156,7 +178,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Roboto',
-                        fontSize: 16, // Tamaño de fuente más pequeño en el botón
+                        fontSize:
+                            16, // Tamaño de fuente más pequeño en el botón
                       ),
                     ),
                   ),
@@ -175,7 +198,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       // Navegar a la pantalla de Registro
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegistroScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => RegistroScreen()),
                       );
                     },
                     child: Column(
@@ -189,8 +213,10 @@ class _SplashScreenState extends State<SplashScreen> {
                             fontFamily: 'Roboto',
                           ),
                         ),
-                        SizedBox(height: 8), // Espacio más pequeño debajo del icono
-                        Icon(Icons.edit, color: Colors.white, size: 24), // Icono más pequeño
+                        SizedBox(
+                            height: 8), // Espacio más pequeño debajo del icono
+                        Icon(Icons.edit,
+                            color: Colors.white, size: 24), // Icono más pequeño
                       ],
                     ),
                   ),
@@ -208,16 +234,19 @@ class _SplashScreenState extends State<SplashScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: modoDesconectadoColor,
-                      padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12), // Reducir el padding
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 35, vertical: 12), // Reducir el padding
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25), // Botón redondeado
+                        borderRadius:
+                            BorderRadius.circular(25), // Botón redondeado
                       ),
                     ),
                     onPressed: () {
                       // Navegar al dashboard en modo desconectado
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DashboardScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => DashboardScreenOF()),
                       );
                     },
                     child: Text(

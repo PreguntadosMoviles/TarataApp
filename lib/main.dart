@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login.dart'; // Asegúrate de crear este archivo
 import 'dashboard.dart'; // Asegúrate de crear este archivo
+import 'ruta.dart'; // Asegúrate de que este archivo esté creado y sea accesible
 import 'package:flutter/services.dart';
 
 void main() {
@@ -96,11 +97,25 @@ class SplashScreen extends StatelessWidget {
                         // Navegar al dashboard en modo desconectado
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => DashboardScreen()),
+                          MaterialPageRoute(builder: (context) => DashboardScreen()),
                         );
                       },
                       child: Text('Ingresar en modo desconectado'),
+                    ),
+                    SizedBox(height: 16),
+                    // Botón que redirige a ruta.dart
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue, // Color del nuevo botón
+                      ),
+                      onPressed: () {
+                        // Navegar a ruta.dart
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RutaScreen()), // Asegúrate de tener RutaScreen en ruta.dart
+                        );
+                      },
+                      child: Text('Ir a Ruta'),
                     ),
                   ],
                 ),

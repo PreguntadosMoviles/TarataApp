@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'registro.dart';
-import 'dashboard.dart';
-import 'recuperarPassword.dart'; // Importa el archivo recuperarPassword.dart
-import 'main.dart'; // Importa el archivo main.dart
+import 'login.dart'; // Asegúrate de tener este archivo creado e importado
 
-class LoginScreen extends StatefulWidget {
+class RecuperarPasswordScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RecuperarPasswordScreenState createState() => _RecuperarPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email = '';
-  String _password = '';
+  String _newPassword = '';
+  String _confirmPassword = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBE4CF), // Fondo cambiado a FBE4CF
+      backgroundColor: Color(0xFFFBE4CF), // Fondo personalizado
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -41,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'INICIA SESIÓN',
+                    'RECUPERAR CONTRASEÑA',
                     style: TextStyle(
                       fontSize: 32, // Aumentar el tamaño del texto
                       color: Colors.white,
@@ -61,36 +58,37 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     _buildTextField(
-                      'Ingresar correo electrónico',
+                      'Ingrese su nueva contraseña',
                       (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese su correo electrónico';
+                          return 'Por favor ingrese su nueva contraseña';
                         }
-                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Por favor ingrese un correo válido';
+                        if (value.length < 6) {
+                          return 'La contraseña debe tener al menos 6 caracteres';
                         }
                         return null;
                       },
                       (value) {
-                        _email = value!;
+                        _newPassword = value!;
                       },
+                      isPassword: true,
                     ),
                     SizedBox(height: 16),
                     _buildTextField(
-                      'Ingresar Password',
+                      'Confirme su nueva contraseña',
                       (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese su contraseña';
+                          return 'Por favor confirme su nueva contraseña';
                         }
                         return null;
                       },
                       (value) {
-                        _password = value!;
+                        _confirmPassword = value!;
                       },
                       isPassword: true,
                     ),
                     SizedBox(height: 30),
-                    // Botón de iniciar sesión
+                    // Botón de cambiar contraseña
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF3AAF7F), // Verde personalizado
@@ -102,15 +100,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          // Navegar al dashboard
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => DashboardScreen()),
-                          );
+                          // Mostrar el cuadro de diálogo de éxito
+                          _showSuccessDialog(context);
                         }
                       },
                       child: Text(
-                        'INICIAR',
+                        'CAMBIAR CONTRASEÑA',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -129,11 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       onPressed: () {
-                        // Navegar de vuelta al archivo main.dart
+                        // Navegar de vuelta al archivo main.dart o login.dart
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyApp()), // Redirige a la pantalla principal
+                              builder: (context) => LoginScreen()), // Redirige al login
                         );
                       },
                       child: Text(
@@ -141,56 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    // Enlace para registrarse
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '¿No tienes una cuenta?',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // Redirigir a la pantalla de registro
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegistroScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Registrate',
-                            style: TextStyle(
-                              color: Color(0xFF406E5B), // Verde personalizado 406E5B
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    // Enlace de olvido de contraseña
-                    TextButton(
-                      onPressed: () {
-                        // Redirigir a la pantalla de recuperación de contraseña
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RecuperarPasswordScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        '¿Olvidó su contraseña?',
-                        style: TextStyle(
-                          color: Color(0xFF406E5B), // Verde personalizado 406E5B
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -224,6 +169,75 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       validator: validator,
       onSaved: onSaved,
+    );
+  }
+
+  // Mostrar un cuadro de diálogo de éxito con fondo translúcido
+  void _showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Evita que se cierre al tocar fuera del diálogo
+      builder: (BuildContext context) {
+        return Center(
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20), // Bordes redondeados
+            ),
+            backgroundColor: Colors.white.withOpacity(0.8), // Fondo translúcido
+            title: Column(
+              children: [
+                Icon(Icons.check_circle,
+                    color: Color(0xFF3AAF7F), size: 60), // Icono de éxito
+                SizedBox(height: 16),
+                Text(
+                  '¡Contraseña cambiada!',
+                  style: TextStyle(
+                    color: Color(0xFF406E5B),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ),
+              ],
+            ),
+            content: Text(
+              'Su contraseña ha sido cambiada con éxito.',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            actions: <Widget>[
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF3AAF7F),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context); // Cerrar el cuadro de diálogo
+                    // Navegar al login después de cambiar la contraseña
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

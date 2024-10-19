@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; 
+import 'login.dart'; // Asegúrate de tener este archivo creado e importado
+import 'main.dart'; // Importa el archivo main.dart para volver a la pantalla principal
 
 class RegistroScreen extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBE4CF), 
+      backgroundColor: Color(0xFFFBE4CF), // Fondo personalizado
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -89,13 +90,13 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     ),
                     SizedBox(height: 16),
                     _buildTextField(
-                      'Ingrese su password',
+                      'Ingrese su contraseña',
                       (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese su password';
+                          return 'Por favor ingrese su contraseña';
                         }
                         if (value.length < 6) {
-                          return 'La password debe tener al menos 6 caracteres';
+                          return 'La contraseña debe tener al menos 6 caracteres';
                         }
                         return null;
                       },
@@ -106,12 +107,12 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     ),
                     SizedBox(height: 16),
                     _buildTextField(
-                      'Confirme su password',
+                      'Confirme su contraseña',
                       (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor confirme su password';
+                          return 'Por favor confirme su contraseña';
                         }
-                        return null; 
+                        return null;
                       },
                       (value) {
                         _confirmarContrasena = value!;
@@ -122,7 +123,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     // Botón de registrar
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF3AAF7F), 
+                        backgroundColor: Color(0xFF3AAF7F), // Verde personalizado
                         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -137,6 +138,33 @@ class _RegistroScreenState extends State<RegistroScreen> {
                       },
                       child: Text(
                         'REGISTRAR',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    // Botón de volver
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF406E5B), // Verde oscuro personalizado
+                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Navegar de vuelta al archivo main.dart
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyApp()), // Redirige a la pantalla principal
+                        );
+                      },
+                      child: Text(
+                        'VOLVER',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -168,7 +196,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                           child: Text(
                             'Iniciar sesión',
                             style: TextStyle(
-                              color: Color(0xFF406E5B), // Verde personalizado 406E5B
+                              color: Color(0xFF406E5B), // Verde personalizado
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -207,66 +235,70 @@ class _RegistroScreenState extends State<RegistroScreen> {
     );
   }
 
-  // Mostrar un cuadro de diálogo de éxito personalizado
+  // Mostrar un cuadro de diálogo de éxito con fondo translúcido
   void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
+      barrierDismissible: false, // Evita que se cierre al tocar fuera del diálogo
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20), // Bordes redondeados
-          ),
-          backgroundColor: Color(0xFFFBE4CF), // Fondo a tono con la app
-          title: Column(
-            children: [
-              Icon(Icons.check_circle, color: Color(0xFF3AAF7F), size: 60), // Icono de éxito
-              SizedBox(height: 16),
-              Text(
-                '¡Registro exitoso!',
-                style: TextStyle(
-                  color: Color(0xFF406E5B),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
+        return Center(
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20), // Bordes redondeados
+            ),
+            backgroundColor: Colors.white.withOpacity(0.8), // Fondo translúcido
+            title: Column(
+              children: [
+                Icon(Icons.check_circle,
+                    color: Color(0xFF3AAF7F), size: 60), // Icono de éxito
+                SizedBox(height: 16),
+                Text(
+                  '¡Registro exitoso!',
+                  style: TextStyle(
+                    color: Color(0xFF406E5B),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ),
+              ],
+            ),
+            content: Text(
+              'Bienvenido/a a Tarata. Su cuenta ha sido creada con éxito.',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            actions: <Widget>[
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF3AAF7F),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context); // Cerrar el cuadro de diálogo
+                    // Navegar al login después del registro exitoso
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
                 ),
               ),
             ],
           ),
-          content: Text(
-            'Bienvenido/a a Tarata. Su cuenta ha sido creada con éxito.',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          actions: <Widget>[
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF3AAF7F),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: Text(
-                  'OK',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context); // Cerrar el cuadro de diálogo
-                  // Navegar al login después del registro exitoso
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                },
-              ),
-            ),
-          ],
         );
       },
     );

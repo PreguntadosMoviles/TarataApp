@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _controller;
   late PageController _pageController;
   int _currentPage = 0;
-  final List<String> _texts = ['WELCOME TO\nTARATA', 'BIENVENIDO A\nTARATA', 'KAMISARAKI\nTARATA']; // Inglés, español, aymara
+  final List<String> _texts = ['WELCOME TO\nTARATA', 'BIENVENIDO A\nTARATA', 'KAMISARAKI\nTARATA']; 
 
   @override
   void initState() {

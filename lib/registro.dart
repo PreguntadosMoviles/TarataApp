@@ -16,13 +16,13 @@ class _RegistroScreenState extends State<RegistroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBE4CF), // Fondo cambiado a FBE4CF
+      backgroundColor: Color(0xFFFBE4CF), 
       body: SingleChildScrollView(
         child: Column(
           children: [
             // Parte superior con la imagen y el título
             Container(
-              height: 300, // Ajusta la altura para que la imagen sea más grande
+              height: 350, // Ajusta la altura para que la imagen sea más grande
               width: double.infinity, // Ocupa todo el ancho de la pantalla
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -34,7 +34,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 50,
+                    radius: 60, // Imagen del usuario más grande
                     backgroundImage: AssetImage('assets/images/user.png'),
                     backgroundColor: Colors.transparent,
                   ),
@@ -42,7 +42,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   Text(
                     'REGISTRO',
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 32, // Aumentar el tamaño del texto
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -51,7 +51,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
               ),
             ),
             // Espacio entre la imagen y el formulario
-            SizedBox(height: 30),
+            SizedBox(height: 35),
             // Formulario
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -89,13 +89,13 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     ),
                     SizedBox(height: 16),
                     _buildTextField(
-                      'Ingrese su contraseña',
+                      'Ingrese su password',
                       (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese su contraseña';
+                          return 'Por favor ingrese su password';
                         }
                         if (value.length < 6) {
-                          return 'La contraseña debe tener al menos 6 caracteres';
+                          return 'La password debe tener al menos 6 caracteres';
                         }
                         return null;
                       },
@@ -106,12 +106,12 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     ),
                     SizedBox(height: 16),
                     _buildTextField(
-                      'Confirme su contraseña',
+                      'Confirme su password',
                       (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor confirme su contraseña';
+                          return 'Por favor confirme su password';
                         }
-                        return null; // Sin verificación de igualdad
+                        return null; 
                       },
                       (value) {
                         _confirmarContrasena = value!;
@@ -122,7 +122,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     // Botón de registrar
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF3AAF7F), // Verde personalizado
+                        backgroundColor: Color(0xFF3AAF7F), 
                         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -207,25 +207,64 @@ class _RegistroScreenState extends State<RegistroScreen> {
     );
   }
 
-  // Mostrar un cuadro de diálogo de éxito
+  // Mostrar un cuadro de diálogo de éxito personalizado
   void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('¡Registro exitoso!'),
-          content: Text('El usuario ha sido registrado con éxito.'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // Bordes redondeados
+          ),
+          backgroundColor: Color(0xFFFBE4CF), // Fondo a tono con la app
+          title: Column(
+            children: [
+              Icon(Icons.check_circle, color: Color(0xFF3AAF7F), size: 60), // Icono de éxito
+              SizedBox(height: 16),
+              Text(
+                '¡Registro exitoso!',
+                style: TextStyle(
+                  color: Color(0xFF406E5B),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+            ],
+          ),
+          content: Text(
+            'Bienvenido/a a Tarata. Su cuenta ha sido creada con éxito.',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
           actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.pop(context); // Cerrar el cuadro de diálogo
-                // Navegar al login después del registro exitoso
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF3AAF7F),
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context); // Cerrar el cuadro de diálogo
+                  // Navegar al login después del registro exitoso
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
+              ),
             ),
           ],
         );

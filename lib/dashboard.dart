@@ -3,6 +3,7 @@ import 'ruta.dart';
 import 'juegos.dart';
 import 'relax.dart';
 import 'senderismo.dart';
+import 'login.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -24,8 +25,8 @@ class _DashboardScreen extends State<DashboardScreen> {
           children: [
             // Parte superior con la imagen y el título
             Container(
-              height: 350, // Ajusta la altura para que la imagen sea más grande
-              width: double.infinity, // Ocupa todo el ancho de la pantalla
+              height: 350,
+              width: double.infinity,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/background.png'),
@@ -36,7 +37,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CircleAvatar(
-                    radius: 60, // Imagen del usuario más grande
+                    radius: 60,
                     backgroundImage: AssetImage('assets/images/user.png'),
                     backgroundColor: Colors.transparent,
                   ),
@@ -44,7 +45,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                   const Text(
                     'Bienvenido Usuario',
                     style: TextStyle(
-                      fontSize: 32, // Aumentar el tamaño del texto
+                      fontSize: 32,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -67,12 +68,9 @@ class _DashboardScreen extends State<DashboardScreen> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          const Color(0xFF406E5B), // Color de fondo
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
-                      shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                      backgroundColor: const Color(0xFF406E5B),
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      shape: const BeveledRectangleBorder(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -81,21 +79,20 @@ class _DashboardScreen extends State<DashboardScreen> {
                           'Ir a Relax',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
-                        const SizedBox(
-                            height: 8), // Espacio entre el texto y el ícono
+                        const SizedBox(height: 8),
                         Image.asset(
-                          'assets/images/relax.png', // Ruta del ícono
-                          height: 36, // Tamaño del ícono
+                          'assets/images/relax.png',
+                          height: 36,
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(width: 10), // Espacio entre botones
+                const SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -107,10 +104,8 @@ class _DashboardScreen extends State<DashboardScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406E5B),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
-                      shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      shape: const BeveledRectangleBorder(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -119,14 +114,14 @@ class _DashboardScreen extends State<DashboardScreen> {
                           'Ir a Senderismo',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Image.asset(
                           'assets/images/senderismo.png',
-                          height: 36, // Tamaño del ícono
+                          height: 36,
                         ),
                       ],
                     ),
@@ -134,7 +129,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10), // Espacio entre las filas
+            const SizedBox(height: 10),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -149,10 +144,8 @@ class _DashboardScreen extends State<DashboardScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406E5B),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
-                      shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      shape: const BeveledRectangleBorder(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -161,14 +154,14 @@ class _DashboardScreen extends State<DashboardScreen> {
                           'Ir a Ruta',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Image.asset(
                           'assets/images/ruta.png',
-                          height: 36, // Tamaño del ícono
+                          height: 36,
                         ),
                       ],
                     ),
@@ -186,10 +179,8 @@ class _DashboardScreen extends State<DashboardScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406E5B),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
-                      shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      shape: const BeveledRectangleBorder(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -198,14 +189,14 @@ class _DashboardScreen extends State<DashboardScreen> {
                           'Ir a Juegos',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Image.asset(
                           'assets/images/yunga.png',
-                          height: 36, // Tamaño del ícono
+                          height: 36,
                         ),
                       ],
                     ),
@@ -213,14 +204,20 @@ class _DashboardScreen extends State<DashboardScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20), // Espacio entre las filas
+            const SizedBox(height: 20),
 
+            // Botón de Cerrar Sesión
             // Botón de Cerrar Sesión
             SizedBox(
               width: double.infinity, // Ocupa todo el ancho
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context); // Cierra sesión y regresa
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginScreen()), // Asegúrate de que LoginScreen esté definido en login.dart
+                  );
                 },
                 child: const Text(
                   'Cerrar Sesión',
@@ -240,7 +237,8 @@ class _DashboardScreen extends State<DashboardScreen> {
         ),
       ),
       bottomNavigationBar: const SizedBox(
-          height: 0), // Asegura que el botón esté pegado a la base
+        height: 0,
+      ),
     );
   }
 }

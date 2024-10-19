@@ -3,7 +3,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'package:geolocator/geolocator.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class MapaTarata extends StatefulWidget {
@@ -13,7 +12,7 @@ class MapaTarata extends StatefulWidget {
 
 class _MapaTarataState extends State<MapaTarata> {
   late GoogleMapController _mapController;
-  LatLng? _currentPosition; // Ubicación actual
+  LatLng _initialPosition = LatLng(-18.006680899903547, -70.22713187454809); // Coordenadas específicas
   Marker? _marker;
   IconData _iconoCentral = Icons.home;
   String _temperatura = 'Cargando...';
@@ -23,7 +22,7 @@ class _MapaTarataState extends State<MapaTarata> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation(); // Obtener la ubicación actual al iniciar
+    _setMarkerAndWeather(_initialPosition); // Establecer marcador y clima al iniciar
     Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         _hora = TimeOfDay.now().format(context);
@@ -31,33 +30,15 @@ class _MapaTarataState extends State<MapaTarata> {
     });
   }
 
-  Future<void> _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      _currentPosition = LatLng(position.latitude, position.longitude);
-      _mapController.animateCamera(CameraUpdate.newLatLng(_currentPosition!));
-      _getWeather(_currentPosition!); // Obtener temperatura inicial en la ubicación actual
-      _marker = Marker(
-        markerId: MarkerId('currentLocation'),
-        position: _currentPosition!,
-        infoWindow: InfoWindow(title: 'Ubicación Actual'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-      );
-    });
-  }
+  void _setMarkerAndWeather(LatLng location) {
+    _marker = Marker(
+      markerId: MarkerId('specifiedLocation'),
+      position: location,
+      infoWindow: InfoWindow(title: 'Ubicación Especificada'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+    );
 
-  void _updateMarker(String label, LatLng location, IconData icon) {
-    setState(() {
-      _marker = Marker(
-        markerId: MarkerId(label),
-        position: location,
-        infoWindow: InfoWindow(title: label),
-        icon: BitmapDescriptor.defaultMarker,
-      );
-      _iconoCentral = icon;
-      _getWeather(location);
-      _mapController.animateCamera(CameraUpdate.newLatLng(location));
-    });
+    _getWeather(location); // Obtener temperatura en la ubicación especificada
   }
 
   Future<void> _getWeather(LatLng location) async {
@@ -84,6 +65,23 @@ class _MapaTarataState extends State<MapaTarata> {
     }
   }
 
+  void _updateMarker(String label, LatLng location, IconData icon) {
+    setState(() {
+      _marker = Marker(
+        markerId: MarkerId(label),
+        position: location,
+        infoWindow: InfoWindow(title: label),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+      );
+
+      // Mueve la cámara hacia la nueva posición del marcador
+      _mapController.animateCamera(CameraUpdate.newLatLng(location));
+
+      // Actualiza el ícono central al ícono del botón seleccionado
+      _iconoCentral = icon;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +91,7 @@ class _MapaTarataState extends State<MapaTarata> {
             children: [
               Container(
                 width: double.infinity,
-                color: Colors.black87,
+                color: Color(0xFF373737),
                 padding: EdgeInsets.all(20.0),
                 child: Column(
                   children: [
@@ -110,7 +108,7 @@ class _MapaTarataState extends State<MapaTarata> {
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.amber,
+                        color: Color(0xFFFADFAE),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -121,7 +119,7 @@ class _MapaTarataState extends State<MapaTarata> {
                 children: [
                   Expanded(
                     child: Container(
-                      color: Colors.brown,
+                      color: Color(0xFF868973),
                       padding: EdgeInsets.all(10.0),
                       child: Text(
                         _temperatura,
@@ -135,7 +133,7 @@ class _MapaTarataState extends State<MapaTarata> {
                   ),
                   Expanded(
                     child: Container(
-                      color: Colors.brown[300],
+                      color: Color(0xFF636560),
                       padding: EdgeInsets.all(10.0),
                       child: Text(
                         _hora,
@@ -153,11 +151,14 @@ class _MapaTarataState extends State<MapaTarata> {
                 child: Container(
                   child: GoogleMap(
                     initialCameraPosition: CameraPosition(
-                      target: _currentPosition ?? LatLng(-17.601, -69.804), // Tarata Location
+                      target: _initialPosition,
                       zoom: 14.0,
                     ),
                     onMapCreated: (controller) {
                       _mapController = controller;
+                      setState(() {
+                        _mapController.animateCamera(CameraUpdate.newLatLng(_initialPosition));
+                      });
                     },
                     markers: _marker != null ? {_marker!} : {},
                     polylines: _polylines, // Agregar polilíneas al mapa
@@ -165,7 +166,7 @@ class _MapaTarataState extends State<MapaTarata> {
                 ),
               ),
               Container(
-                color: Colors.black87,
+                color: Color(0xFF373737),
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: GridView.count(
@@ -237,45 +238,79 @@ class _MapaTarataState extends State<MapaTarata> {
     List<LatLng> polylineCoordinates = [];
 
     // Reemplaza con tu API Key de Google
-    String googleApiKey = 'AIzaSyDYMS4cdyIBc8Y9bzrNNM8G8UI69rzS04U'; 
+    String googleApiKey = 'AIzaSyDYMS4cdyIBc8Y9bzrNNM8G8UI69rzS04U';
 
-    // Comprobar que la posición actual no es nula
-    if (_currentPosition != null) {
-      // Construir la URL para la Directions API
-      String url = 'https://maps.googleapis.com/maps/api/directions/json?origin=${_currentPosition!.latitude},${_currentPosition!.longitude}&destination=${destination.latitude},${destination.longitude}&key=$googleApiKey';
-      print(url); // Imprimir la URL para verificación
+    // Construir la URL para la Directions API
+    String url = 'https://maps.googleapis.com/maps/api/directions/json?origin=${_initialPosition.latitude},${_initialPosition.longitude}&destination=${destination.latitude},${destination.longitude}&key=$googleApiKey';
+    print(url); // Imprimir la URL para verificación
 
-      // Realizar la solicitud a la Directions API
-      var response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        if (data['status'] == 'OK') {
-          // Obtener las coordenadas de la ruta
-          for (var step in data['routes'][0]['legs'][0]['steps']) {
-            LatLng point = LatLng(step['end_location']['lat'], step['end_location']['lng']);
-            polylineCoordinates.add(point);
-          }
-
-          // Limpiar las polilíneas antes de agregar la nueva
-          setState(() {
-            _polylines.clear(); // Limpiar las polilíneas anteriores
-            _polylines.add(
-              Polyline(
-                polylineId: PolylineId('route'),
-                color: Colors.blue,
-                points: polylineCoordinates,
-                width: 5,
-              ),
-            );
-          });
-        } else {
-          print('Error en la respuesta de la API: ${data['status']}');
+    // Realizar la solicitud a la Directions API
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      if (data['status'] == 'OK') {
+        // Obtener las coordenadas de la ruta
+        for (var step in data['routes'][0]['legs'][0]['steps']) {
+          // Obtener los puntos de la ruta utilizando "polyline"
+          var polyline = step['polyline']['points'];
+          polylineCoordinates.addAll(_convertToLatLng(polyline));
         }
-      } else {
-        print('Error al obtener la ruta: ${response.statusCode}');
+
+        // Limpiar las polilíneas antes de agregar la nueva
+        _polylines.clear();
+
+        // Crear la nueva polilínea
+        Polyline polyline = Polyline(
+          polylineId: PolylineId('route'),
+          color: Colors.blue,
+          points: polylineCoordinates,
+          width: 5,
+        );
+
+        // Agregar la polilínea al conjunto
+        _polylines.add(polyline);
+
+        // Actualizar el estado para reflejar los cambios
+        setState(() {});
       }
-    } else {
-      print('La posición actual es nula. No se puede mostrar la ruta.');
     }
+  }
+
+  List<LatLng> _convertToLatLng(String encoded) {
+    List<LatLng> coordinates = [];
+    List<int> offsets = [];
+    int index = 0, len = encoded.length;
+    int lat = 0, lng = 0;
+
+    while (index < len) {
+      int b;
+      int shift = 0;
+      int result = 0;
+
+      do {
+        b = encoded.codeUnitAt(index++) - 63;
+        result |= (b & 0x1f) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+
+      int dlat = (result >> 1) ^ -(result & 1);
+      lat += dlat;
+
+      shift = 0;
+      result = 0;
+
+      do {
+        b = encoded.codeUnitAt(index++) - 63;
+        result |= (b & 0x1f) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+
+      int dlng = (result >> 1) ^ -(result & 1);
+      lng += dlng;
+
+      LatLng latLng = LatLng(lat / 1E5, lng / 1E5);
+      coordinates.add(latLng);
+    }
+    return coordinates;
   }
 }

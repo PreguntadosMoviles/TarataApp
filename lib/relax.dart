@@ -8,7 +8,8 @@ class RelaxScreen extends StatefulWidget {
 
 class _RelaxScreenState extends State<RelaxScreen> {
   final CarouselSliderController _carouselController =
-      CarouselSliderController(); // Controlador del carrusel
+      CarouselSliderController();
+
   bool _isFirstCarouselActive = false;
   bool _isSecondCarouselActive = false;
 
@@ -19,110 +20,116 @@ class _RelaxScreenState extends State<RelaxScreen> {
         title: const Text(''),
         backgroundColor: const Color(0xFFFBE4CF),
       ),
-      backgroundColor: const Color(0xFFFBE4CF), // Fondo crema
-      body: Column(
-        children: [
-          // Contenedor verde
-          Container(
-            width: double.infinity,
-            color: const Color(0xFF406E5B), // Verde oscuro
-            padding:
-                const EdgeInsets.symmetric(vertical: 20), // Espaciado vertical
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // Ajusta el tamaño mínimo
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Centra el contenido
-              children: const [
-                Text(
-                  'RELAX',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+      backgroundColor: const Color(0xFFFBE4CF),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Contenedor verde
+            Container(
+              width: double.infinity,
+              color: const Color(0xFF406E5B),
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    'RELAX',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                SizedBox(height: 8), // Espacio entre RELAX y TARATA
-                Text(
-                  'TARATA',
-                  style: TextStyle(
-                    fontSize: 30, // Tamaño mayor para TARATA
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFFADFAE), // Color crema claro
+                  SizedBox(height: 8),
+                  Text(
+                    'TARATA',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFADFAE),
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Primer carrusel con texto
+            _buildCarouselWithOverlay(
+              images: [
+                'assets/images/relax1.png',
+                'assets/images/relax2.png',
+                'assets/images/relax3.png',
               ],
+              text:
+                  'Descubre el arte ancestral de la cerámica y la alfarería en este taller interactivo. Bajo la guía de artesanos locales, aprenderás las técnicas tradicionales para moldear y decorar piezas únicas de barro. Es una oportunidad perfecta para relajarse mientras desarrollas tu creatividad, creando recuerdos tangibles de tu visita a Tarata, todo en un ambiente tranquilo y culturalmente enriquecedor.',
+              isActive: _isFirstCarouselActive,
+              onTap: () {
+                setState(() {
+                  _isFirstCarouselActive = !_isFirstCarouselActive;
+                  _isSecondCarouselActive = false; // Oculta el segundo carrusel
+                });
+              },
             ),
-          ),
-          const SizedBox(
-              height: 20), // Espacio entre el contenedor y el carrusel
+            const SizedBox(height: 20),
 
-          // Primer carrusel
-          _buildCarouselWithOverlay(
-            images: [
-              'assets/images/relax1.png',
-              'assets/images/relax2.png',
-              'assets/images/relax3.png',
-            ],
-            text:
-                'Descubre el arte ancestral de la cerámica y la alfarería en este taller interactivo. Bajo la guía de artesanos locales, aprenderás las técnicas tradicionales para moldear y decorar piezas únicas de barro. Es una oportunidad perfecta para relajarse mientras desarrollas tu creatividad, creando recuerdos tangibles de tu visita a Tarata, todo en un ambiente tranquilo y culturalmente enriquecedor.',
-            isActive: _isFirstCarouselActive,
-            onTap: () {
-              setState(() {
-                _isFirstCarouselActive = !_isFirstCarouselActive;
-                _isSecondCarouselActive = false; // Oculta el segundo carrusel
-              });
-            },
-          ),
-          const SizedBox(height: 20),
-
-          // Segundo carrusel
-          _buildCarouselWithOverlay(
-            images: [
-              'assets/images/relax4.png',
-              'assets/images/relax5.png',
-              'assets/images/relax6.png',
-            ],
-            text:
-                'Ubicados en un entorno natural privilegiado, los Baños Termales de Putina ofrecen una experiencia relajante y revitalizante. Sus aguas termales, ricas en minerales, son conocidas por sus propiedades curativas, perfectas para aliviar el estrés y revitalizar el cuerpo. Rodeado de naturaleza, este lugar es ideal para desconectarse y disfrutar de momentos de paz y tranquilidad en plena conexión con el entorno andino.',
-            isActive: _isSecondCarouselActive,
-            onTap: () {
-              setState(() {
-                _isSecondCarouselActive = !_isSecondCarouselActive;
-                _isFirstCarouselActive = false; // Oculta el primer carrusel
-              });
-            },
-          ),
-          const SizedBox(height: 20),
-
-          // Botones "Ver ubicación"
-          if (_isFirstCarouselActive)
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF406E5B), // Color verde
+            // Botón de Ver Ubicación para el primer carrusel
+            if (_isFirstCarouselActive)
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF406E5B),
+                ),
+                onPressed: () {
+                  // Acción del botón para el primer carrusel
+                },
+                child: const Text(
+                  'Ver Ubicación',
+                  style: TextStyle(color: Colors.white), // Texto en blanco
+                ),
               ),
-              child: const Text(
-                'Ver ubicación',
-                style: TextStyle(color: Colors.white),
-              ),
+            const SizedBox(height: 20),
+
+            // Segundo carrusel con texto
+            _buildCarouselWithOverlay(
+              images: [
+                'assets/images/relax4.png',
+                'assets/images/relax5.png',
+                'assets/images/relax6.png',
+              ],
+              text:
+                  'Ubicados en un entorno natural privilegiado, los Baños Termales de Putina ofrecen una experiencia relajante y revitalizante. Sus aguas termales, ricas en minerales, son conocidas por sus propiedades curativas, perfectas para aliviar el estrés y revitalizar el cuerpo. Rodeado de naturaleza, este lugar es ideal para desconectarse y disfrutar de momentos de paz y tranquilidad en plena conexión con el entorno andino.',
+              isActive: _isSecondCarouselActive,
+              onTap: () {
+                setState(() {
+                  _isSecondCarouselActive = !_isSecondCarouselActive;
+                  _isFirstCarouselActive = false; // Oculta el primer carrusel
+                });
+              },
             ),
-          if (_isSecondCarouselActive)
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF406E5B), // Color verde
+            const SizedBox(height: 20),
+
+            // Botón de Ver Ubicación para el segundo carrusel
+            if (_isSecondCarouselActive)
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF406E5B),
+                ),
+                onPressed: () {
+                  // Acción del botón para el segundo carrusel
+                },
+                child: const Text(
+                  'Ver Ubicación',
+                  style: TextStyle(color: Colors.white), // Texto en blanco
+                ),
               ),
-              child: const Text(
-                'Ver ubicación',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  // Método para construir un carrusel con overlay
+  // Método para construir un carrusel con texto
   Widget _buildCarouselWithOverlay({
     required List<String> images,
     required String text,
@@ -142,9 +149,7 @@ class _RelaxScreenState extends State<RelaxScreen> {
               autoPlayInterval: const Duration(seconds: 3),
               enlargeCenterPage: true,
             ),
-            items: images.map((image) {
-              return _buildImageContainer(image);
-            }).toList(),
+            items: images.map((item) => _buildImageContainer(item)).toList(),
           ),
           if (isActive)
             Container(
@@ -174,12 +179,10 @@ class _RelaxScreenState extends State<RelaxScreen> {
   Widget _buildImageContainer(String imagePath) {
     return Container(
       width: double.infinity, // Asegura que el contenedor ocupe todo el ancho
-      height:
-          200, // Ajusta la altura para asegurarte que las imágenes se vean bien
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(imagePath),
-          fit: BoxFit.cover, // Asegura que la imagen cubra el área
+          fit: BoxFit.cover,
         ),
       ),
     );

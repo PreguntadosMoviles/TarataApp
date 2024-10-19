@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dashboard.dart'; 
 
 void main() {
   runApp(MyApp());
@@ -175,9 +176,13 @@ class ParqueFerialScreen extends StatelessWidget {
         child: FloatingActionButton(
           backgroundColor: Colors.green,
           child: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context); // Acción para regresar al menú principal
-          },
+              onPressed: () {
+                // Navegar a la pantalla definida en juegos.dart
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardScreen()), // Asegúrate de que JuegosScreen esté definido en juegos.dart
+                );
+              },
         ),
       ),
     );

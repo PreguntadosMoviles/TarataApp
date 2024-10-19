@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ruta.dart'; // Asegúrate de importar ruta.dart
+import 'ruta.dart'; 
+import 'juegos.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class DashboardScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Pantalla de Dashboard (Modo Desconectado)'),
-            SizedBox(height: 20), // Espacio entre el texto y el botón
+            SizedBox(height: 20), // Espacio entre el texto y los botones
             ElevatedButton(
               onPressed: () {
                 // Navegar a la pantalla definida en ruta.dart
@@ -23,6 +24,17 @@ class DashboardScreen extends StatelessWidget {
                 );
               },
               child: Text('Ir a Ruta'),
+            ),
+            SizedBox(height: 20), // Espacio entre los botones
+            ElevatedButton(
+              onPressed: () {
+                // Navegar a la pantalla definida en juegos.dart
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ParqueFerialScreen()), // Asegúrate de que JuegosScreen esté definido en juegos.dart
+                );
+              },
+              child: Text('Ir a Juegos'),
             ),
           ],
         ),

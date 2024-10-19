@@ -15,6 +15,7 @@ class _DashboardScreen extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard'),
+        backgroundColor: const Color(0xFFFBE4CF),
       ),
       backgroundColor: const Color(0xFFFBE4CF),
       body: SingleChildScrollView(

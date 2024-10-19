@@ -9,7 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  video_player: ^2.5.1  # Asegúrate de usar la última versión disponible
+  google_maps_flutter: ^2.9.0
+  http: ^1.2.2
+  geolocator: ^13.0.1
+  flutter_polyline_points: ^2.1.0
+  video_player: ^2.5.1
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +25,4 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/videos/ # Aquí se agrega el video a los assets
-
-
+    - assets/videos/

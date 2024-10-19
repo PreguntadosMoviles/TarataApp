@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login.dart'; 
 import 'dashboard.dart'; 
 import 'registro.dart'; 
+import 'ruta.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async'; 

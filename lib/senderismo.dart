@@ -182,7 +182,7 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
             backgroundColor: Colors.green,
             child: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              // Navegar a la pantalla definida en dashboard.dart
+              // Navegar a la pantalla anteriro
               Navigator.pop(context);
             },
           ),

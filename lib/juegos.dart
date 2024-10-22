@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dashboard.dart'; 
+import 'dashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,7 +63,10 @@ class ParqueFerialScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(Icons.arrow_back_ios, color: Colors.white, size: 48, weight: 5), // Flechas más grandes y gruesas
+                  Icon(Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 48,
+                      weight: 5), // Flechas más grandes y gruesas
                   Column(
                     children: [
                       Text(
@@ -84,7 +87,10 @@ class ParqueFerialScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Icon(Icons.arrow_forward_ios, color: Colors.white, size: 48, weight: 5), // Flechas más grandes y gruesas
+                  Icon(Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 48,
+                      weight: 5), // Flechas más grandes y gruesas
                 ],
               ),
               SizedBox(height: 10),
@@ -98,7 +104,8 @@ class ParqueFerialScreen extends StatelessWidget {
                   ),
                 ),
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.3, // Ajuste de altura para 1/4 de la pantalla
+                height: MediaQuery.of(context).size.height *
+                    0.3, // Ajuste de altura para 1/4 de la pantalla
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -118,7 +125,8 @@ class ParqueFerialScreen extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
-                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                         textStyle: TextStyle(fontSize: 18),
                       ),
                       child: Text(
@@ -134,11 +142,13 @@ class ParqueFerialScreen extends StatelessWidget {
           // Botones de precios y galería elevados
           Positioned(
             left: 10,
-            top: MediaQuery.of(context).size.height * 0.4, // Ajustado para estar más arriba
+            top: MediaQuery.of(context).size.height *
+                0.4, // Ajustado para estar más arriba
             child: Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.attach_money, color: Colors.white, size: 48), // Icono más grande
+                  icon: Icon(Icons.attach_money,
+                      color: Colors.white, size: 48), // Icono más grande
                   onPressed: () {
                     // Acción del botón de precios
                   },
@@ -152,11 +162,13 @@ class ParqueFerialScreen extends StatelessWidget {
           ),
           Positioned(
             right: 10,
-            top: MediaQuery.of(context).size.height * 0.4, // Ajustado para estar más arriba
+            top: MediaQuery.of(context).size.height *
+                0.4, // Ajustado para estar más arriba
             child: Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.photo, color: Colors.white, size: 48), // Icono más grande
+                  icon: Icon(Icons.photo,
+                      color: Colors.white, size: 48), // Icono más grande
                   onPressed: () {
                     // Acción del botón de galería
                   },
@@ -176,13 +188,10 @@ class ParqueFerialScreen extends StatelessWidget {
         child: FloatingActionButton(
           backgroundColor: Colors.green,
           child: Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                // Navegar a la pantalla definida en juegos.dart
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DashboardScreen()), // Asegúrate de que JuegosScreen esté definido en juegos.dart
-                );
-              },
+          onPressed: () {
+            // Navegar a la pantalla definida en juegos.dart
+            Navigator.pop(context);
+          },
         ),
       ),
     );

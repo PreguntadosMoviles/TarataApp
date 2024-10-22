@@ -55,12 +55,24 @@ class _RelaxScreenState extends State<RelaxScreen> {
             ),
             const SizedBox(height: 20),
 
+            // Título del primer carrusel
+            const Text(
+              'Taller de cerámica y alfarería',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 10),
+
             // Primer carrusel con texto
             _buildCarouselWithOverlay(
               images: [
                 'assets/images/relax1.png',
                 'assets/images/relax2.png',
-                'assets/images/relax3.png',
+                'assets/images/relax3.jpg',
+                'assets/images/relax4.jpg',
               ],
               text:
                   'Descubre el arte ancestral de la cerámica y la alfarería en este taller interactivo. Bajo la guía de artesanos locales, aprenderás las técnicas tradicionales para moldear y decorar piezas únicas de barro. Es una oportunidad perfecta para relajarse mientras desarrollas tu creatividad, creando recuerdos tangibles de tu visita a Tarata, todo en un ambiente tranquilo y culturalmente enriquecedor.',
@@ -90,12 +102,26 @@ class _RelaxScreenState extends State<RelaxScreen> {
               ),
             const SizedBox(height: 20),
 
+            // Título del segundo carrusel
+            const Text(
+              'Baños termales',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 10),
+
             // Segundo carrusel con texto
             _buildCarouselWithOverlay(
               images: [
-                'assets/images/relax4.png',
                 'assets/images/relax5.png',
                 'assets/images/relax6.png',
+                'assets/images/relax7.png',
+                'assets/images/relax8.jpg',
+                'assets/images/relax9.jpg',
+                'assets/images/relax10.jpg',
               ],
               text:
                   'Ubicados en un entorno natural privilegiado, los Baños Termales de Putina ofrecen una experiencia relajante y revitalizante. Sus aguas termales, ricas en minerales, son conocidas por sus propiedades curativas, perfectas para aliviar el estrés y revitalizar el cuerpo. Rodeado de naturaleza, este lugar es ideal para desconectarse y disfrutar de momentos de paz y tranquilidad en plena conexión con el entorno andino.',

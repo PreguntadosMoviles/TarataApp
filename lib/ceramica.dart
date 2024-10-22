@@ -73,126 +73,119 @@ class _CeramicaScreenState extends State<CeramicaScreen> {
         title: const Text('Cerámica y Alfarería'),
         backgroundColor: const Color(0xFF406E5B),
       ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            // Fondo completo usando Stack
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/fondorelax.jpg'),
-                  fit: BoxFit
-                      .cover, // Aseguramos que la imagen cubra todo el fondo
-                ),
-              ),
-            ),
-            // Contenido sobre el fondo
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Bienvenido al Taller de Cerámica',
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/fondorelax.jpg'),
+            fit: BoxFit.cover, // Aseguramos que la imagen cubra todo el fondo
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Bienvenido al Taller de Cerámica',
+                    style: TextStyle(
+                      fontSize: 28, // Tamaño de letra aumentado
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  // Carrusel de imágenes arriba de la información
+                  _buildCarousel(),
+                  const SizedBox(height: 20),
+                  // Contenedor oscuro y transparente para la información
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black
+                          .withOpacity(0.5), // Color oscuro y transparente
+                      borderRadius:
+                          BorderRadius.circular(10), // Bordes redondeados
+                    ),
+                    child: const Text(
+                      'Descubre el arte ancestral de la cerámica y la alfarería en este taller interactivo. Bajo la guía de artesanos locales, aprenderás las técnicas tradicionales para moldear y decorar piezas únicas de barro. Es una oportunidad perfecta para relajarse mientras desarrollas tu creatividad, creando recuerdos tangibles de tu visita a Tarata, todo en un ambiente tranquilo y culturalmente enriquecedor.',
                       style: TextStyle(
-                        fontSize: 28, // Tamaño de letra aumentado
-                        fontWeight: FontWeight.bold,
+                        fontSize: 18, // Tamaño de letra aumentado
+                        fontWeight: FontWeight.bold, // Texto en negrita
                         color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 20),
-                    // Carrusel de imágenes arriba de la información
-                    _buildCarousel(),
-                    const SizedBox(height: 20),
-                    // Contenedor oscuro y transparente para la información
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.black
-                            .withOpacity(0.5), // Color oscuro y transparente
-                        borderRadius:
-                            BorderRadius.circular(10), // Bordes redondeados
-                      ),
-                      child: const Text(
-                        'Descubre el arte ancestral de la cerámica y la alfarería en este taller interactivo. Bajo la guía de artesanos locales, aprenderás las técnicas tradicionales para moldear y decorar piezas únicas de barro. Es una oportunidad perfecta para relajarse mientras desarrollas tu creatividad, creando recuerdos tangibles de tu visita a Tarata, todo en un ambiente tranquilo y culturalmente enriquecedor.',
-                        style: TextStyle(
-                          fontSize: 18, // Tamaño de letra aumentado
-                          fontWeight: FontWeight.bold, // Texto en negrita
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Contenedor para mapa, hora y temperatura
+                  Container(
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    const SizedBox(height: 20),
-                    // Contenedor para mapa, hora y temperatura
-                    Container(
-                      padding: const EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  color: Color(0xFF868973),
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Text(
-                                    _temperatura,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                color: Color(0xFF868973),
+                                padding: EdgeInsets.all(10.0),
+                                child: Text(
+                                  _temperatura,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Container(
-                                  color: Color(0xFF636560),
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Text(
-                                    _hora,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 250, // Ajusta la altura del mapa
-                            width: double.infinity,
-                            child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                target: _initialPosition,
-                                zoom: 14.0,
-                              ),
-                              onMapCreated: (controller) {
-                                _mapController = controller;
-                                setState(() {
-                                  _mapController.animateCamera(
-                                      CameraUpdate.newLatLng(_initialPosition));
-                                });
-                              },
-                              markers: _marker != null ? {_marker!} : {},
                             ),
+                            Expanded(
+                              child: Container(
+                                color: Color(0xFF636560),
+                                padding: EdgeInsets.all(10.0),
+                                child: Text(
+                                  _hora,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 250, // Ajusta la altura del mapa
+                          width: double.infinity,
+                          child: GoogleMap(
+                            initialCameraPosition: CameraPosition(
+                              target: _initialPosition,
+                              zoom: 14.0,
+                            ),
+                            onMapCreated: (controller) {
+                              _mapController = controller;
+                              setState(() {
+                                _mapController.animateCamera(
+                                    CameraUpdate.newLatLng(_initialPosition));
+                              });
+                            },
+                            markers: _marker != null ? {_marker!} : {},
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

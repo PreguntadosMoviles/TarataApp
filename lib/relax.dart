@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'ceramica1.dart'; // Asegúrate de importar la pantalla ceramica.dart
+import 'ceramica.dart';
 import 'termales.dart';
+import 'ceramica1.dart';
+import 'termales1.dart';
 
 class RelaxScreen extends StatefulWidget {
   @override
@@ -86,7 +88,7 @@ class _RelaxScreenState extends State<RelaxScreen> {
               onInfoPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Ceramica1Screen()),
+                  MaterialPageRoute(builder: (context) => CeramicaScreen()),
                 );
               },
             ),

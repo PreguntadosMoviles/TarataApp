@@ -17,17 +17,29 @@ class _CeramicaScreenState extends State<CeramicaScreen> {
   Marker? _marker;
   String _temperatura = 'Cargando...';
   String _hora = 'Cargando...';
+  late Timer _timer; // 1. Declaración del Timer
 
+  @override
   @override
   void initState() {
     super.initState();
     _setMarkerAndWeather(
         _initialPosition); // Establecer marcador y clima al iniciar
-    Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() {
-        _hora = TimeOfDay.now().format(context);
-      });
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      if (mounted) {
+        // 2. Verificación del estado montado
+        setState(() {
+          _hora = TimeOfDay.now().format(context);
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // 3. Cancelación del Timer en dispose()
+    _mapController.dispose(); // Liberar recursos del controlador de mapas
+    super.dispose();
   }
 
   void _setMarkerAndWeather(LatLng location) {

@@ -27,17 +27,18 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
 
   // Lista de imágenes de fondo
   final List<String> _backgroundImages = [
-    'assets/images/senderismo1.png',
-    'assets/images/senderismo2.png',
-    'assets/images/senderismo3.png',
-    'assets/images/senderismo4.png',
+    'assets/images/senderismo1.jpg',
+    'assets/images/senderismo2.jpg',
+    'assets/images/senderismo3.jpg',
+    'assets/images/senderismo4.jpg',
+    'assets/images/senderismo5.png',
   ];
 
   @override
   void initState() {
     super.initState();
     // Inicia el Timer para cambiar la imagen cada 2 segundos
-    _imageChangeTimer = Timer.periodic(Duration(seconds: 2), (timer) {
+    _imageChangeTimer = Timer.periodic(Duration(seconds: 3), (timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) %
             _backgroundImages.length; // Cambia la imagen
@@ -181,13 +182,8 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
             backgroundColor: Colors.green,
             child: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              // Navegar a la pantalla definida en dashboard.dart
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        DashboardScreen()), // Asegúrate de que DashboardScreen esté definido en dashboard.dart
-              );
+              // Navegar a la pantalla anteriro
+              Navigator.pop(context);
             },
           ),
         ),

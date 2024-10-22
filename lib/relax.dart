@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'ceramica.dart';
+import 'termales.dart';
+import 'ceramica1.dart';
+import 'termales1.dart';
 
 class RelaxScreen extends StatefulWidget {
   @override
@@ -55,15 +59,25 @@ class _RelaxScreenState extends State<RelaxScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Primer carrusel con texto
+            // Título del primer carrusel
+            const Text(
+              'Taller de cerámica y alfarería',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Primer carrusel con botón "Ver Información"
             _buildCarouselWithOverlay(
               images: [
                 'assets/images/relax1.png',
                 'assets/images/relax2.png',
-                'assets/images/relax3.png',
+                'assets/images/relax3.jpg',
+                'assets/images/relax4.jpg',
               ],
-              text:
-                  'Descubre el arte ancestral de la cerámica y la alfarería en este taller interactivo. Bajo la guía de artesanos locales, aprenderás las técnicas tradicionales para moldear y decorar piezas únicas de barro. Es una oportunidad perfecta para relajarse mientras desarrollas tu creatividad, creando recuerdos tangibles de tu visita a Tarata, todo en un ambiente tranquilo y culturalmente enriquecedor.',
               isActive: _isFirstCarouselActive,
               onTap: () {
                 setState(() {
@@ -71,34 +85,36 @@ class _RelaxScreenState extends State<RelaxScreen> {
                   _isSecondCarouselActive = false; // Oculta el segundo carrusel
                 });
               },
+              onInfoPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CeramicaScreen()),
+                );
+              },
             ),
             const SizedBox(height: 20),
 
-            // Botón de Ver Ubicación para el primer carrusel
-            if (_isFirstCarouselActive)
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF406E5B),
-                ),
-                onPressed: () {
-                  // Acción del botón para el primer carrusel
-                },
-                child: const Text(
-                  'Ver Ubicación',
-                  style: TextStyle(color: Colors.white), // Texto en blanco
-                ),
+            // Título del segundo carrusel
+            const Text(
+              'Baños termales',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
-            const SizedBox(height: 20),
+            ),
+            const SizedBox(height: 10),
 
-            // Segundo carrusel con texto
+            // Segundo carrusel con botón "Ver Información"
             _buildCarouselWithOverlay(
               images: [
-                'assets/images/relax4.png',
                 'assets/images/relax5.png',
                 'assets/images/relax6.png',
+                'assets/images/relax7.png',
+                'assets/images/relax8.jpg',
+                'assets/images/relax9.jpg',
+                'assets/images/relax10.jpg',
               ],
-              text:
-                  'Ubicados en un entorno natural privilegiado, los Baños Termales de Putina ofrecen una experiencia relajante y revitalizante. Sus aguas termales, ricas en minerales, son conocidas por sus propiedades curativas, perfectas para aliviar el estrés y revitalizar el cuerpo. Rodeado de naturaleza, este lugar es ideal para desconectarse y disfrutar de momentos de paz y tranquilidad en plena conexión con el entorno andino.',
               isActive: _isSecondCarouselActive,
               onTap: () {
                 setState(() {
@@ -106,35 +122,25 @@ class _RelaxScreenState extends State<RelaxScreen> {
                   _isFirstCarouselActive = false; // Oculta el primer carrusel
                 });
               },
+              onInfoPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TermalesScreen()),
+                );
+              },
             ),
-            const SizedBox(height: 20),
-
-            // Botón de Ver Ubicación para el segundo carrusel
-            if (_isSecondCarouselActive)
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF406E5B),
-                ),
-                onPressed: () {
-                  // Acción del botón para el segundo carrusel
-                },
-                child: const Text(
-                  'Ver Ubicación',
-                  style: TextStyle(color: Colors.white), // Texto en blanco
-                ),
-              ),
           ],
         ),
       ),
     );
   }
 
-  // Método para construir un carrusel con texto
+  // Método para construir un carrusel con texto y botón de información
   Widget _buildCarouselWithOverlay({
     required List<String> images,
-    required String text,
     required bool isActive,
     required VoidCallback onTap,
+    required VoidCallback onInfoPressed, // Añadido
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -156,18 +162,36 @@ class _RelaxScreenState extends State<RelaxScreen> {
               color: Colors.black54, // Oscurecer el fondo
               height: 200,
               alignment: Alignment.center,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    text,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold, // Texto en negrita
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 150,
+                    child: Center(
+                      child: Text(
+                        'Toque para ver más información',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF406E5B),
+                    ),
+                    onPressed:
+                        onInfoPressed, // Llama a la función onInfoPressed
+                    child: const Text(
+                      'Ver Información',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
               ),
             ),
         ],

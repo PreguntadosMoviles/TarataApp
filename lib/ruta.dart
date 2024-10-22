@@ -8,7 +8,8 @@ class RutaScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Ruta de Acceso a Tarata',
-          style: TextStyle(color: Colors.white), // Cambia el color del texto a blanco
+          style: TextStyle(
+              color: Colors.white), // Cambia el color del texto a blanco
         ),
         backgroundColor: Colors.grey[850],
       ),

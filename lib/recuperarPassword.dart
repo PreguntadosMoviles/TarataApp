@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; // Asegúrate de tener este archivo creado e importado
+import 'login.dart';
 
 class RecuperarPasswordScreen extends StatefulWidget {
   @override
@@ -15,14 +15,13 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBE4CF), // Fondo personalizado
+      backgroundColor: Color(0xFFFBE4CF),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Parte superior con la imagen y el título
             Container(
-              height: 350, // Ajusta la altura para que la imagen sea más grande
-              width: double.infinity, // Ocupa todo el ancho de la pantalla
+              height: 350,
+              width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/background.png'),
@@ -33,7 +32,7 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 60, // Imagen del usuario más grande
+                    radius: 60,
                     backgroundImage: AssetImage('assets/images/user.png'),
                     backgroundColor: Colors.transparent,
                   ),
@@ -41,7 +40,7 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                   Text(
                     'RECUPERAR CONTRASEÑA',
                     style: TextStyle(
-                      fontSize: 32, // Aumentar el tamaño del texto
+                      fontSize: 32,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -49,9 +48,7 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                 ],
               ),
             ),
-            // Espacio entre la imagen y el formulario
             SizedBox(height: 30),
-            // Formulario
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Form(
@@ -89,11 +86,10 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                       isPassword: true,
                     ),
                     SizedBox(height: 30),
-                    // Botón de cambiar contraseña
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            Color(0xFF3AAF7F), // Verde personalizado
+                            Color(0xFF3AAF7F),
                         padding:
                             EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -103,7 +99,6 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          // Mostrar el cuadro de diálogo de éxito
                           _showSuccessDialog(context);
                         }
                       },
@@ -117,11 +112,10 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    // Botón de volver
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            Color(0xFF406E5B), // Verde oscuro personalizado
+                            Color(0xFF406E5B),
                         padding:
                             EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -129,12 +123,11 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                         ),
                       ),
                       onPressed: () {
-                        // Navegar de vuelta al archivo main.dart o login.dart
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  LoginScreen()), // Redirige al login
+                                  LoginScreen()),
                         );
                       },
                       child: Text(
@@ -184,18 +177,18 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
     showDialog(
       context: context,
       barrierDismissible:
-          false, // Evita que se cierre al tocar fuera del diálogo
+          false,
       builder: (BuildContext context) {
         return Center(
           child: AlertDialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20), // Bordes redondeados
+              borderRadius: BorderRadius.circular(20),
             ),
-            backgroundColor: Colors.white.withOpacity(0.8), // Fondo translúcido
+            backgroundColor: Colors.white.withOpacity(0.8),
             title: Column(
               children: [
                 Icon(Icons.check_circle,
-                    color: Color(0xFF3AAF7F), size: 60), // Icono de éxito
+                    color: Color(0xFF3AAF7F), size: 60),
                 SizedBox(height: 16),
                 Text(
                   '¡Contraseña cambiada!',
@@ -233,8 +226,7 @@ class _RecuperarPasswordScreenState extends State<RecuperarPasswordScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pop(context); // Cerrar el cuadro de diálogo
-                    // Navegar al login después de cambiar la contraseña
+                    Navigator.pop(context);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => LoginScreen()),

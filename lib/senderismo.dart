@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async'; // Importa el paquete para usar Timer
+import 'dart:async';
 import 'dashboard.dart';
 
 void main() {
@@ -21,11 +21,10 @@ class SenderismoScreen extends StatefulWidget {
 }
 
 class _SenderismoScreenState extends State<SenderismoScreen> {
-  bool _isContainerVisible = false; // Controla la visibilidad del contenedor
-  int _currentImageIndex = 0; // Índice de la imagen actual
-  late Timer _imageChangeTimer; // Timer para cambiar la imagen
+  bool _isContainerVisible = false;
+  int _currentImageIndex = 0;
+  late Timer _imageChangeTimer;
 
-  // Lista de imágenes de fondo
   final List<String> _backgroundImages = [
     'assets/images/senderismo1.jpg',
     'assets/images/senderismo2.jpg',
@@ -37,18 +36,17 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
   @override
   void initState() {
     super.initState();
-    // Inicia el Timer para cambiar la imagen cada 2 segundos
     _imageChangeTimer = Timer.periodic(Duration(seconds: 3), (timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) %
-            _backgroundImages.length; // Cambia la imagen
+            _backgroundImages.length;
       });
     });
   }
 
   @override
   void dispose() {
-    _imageChangeTimer.cancel(); // Cancela el Timer cuando se elimina el widget
+    _imageChangeTimer.cancel();
     super.dispose();
   }
 
@@ -68,23 +66,21 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onTap: _hideContainer, // Oculta el contenedor gris al tocar el fondo
+        onTap: _hideContainer,
         child: Stack(
           children: [
-            // Fondo de la imagen de senderismo
             Positioned.fill(
               child: ColorFiltered(
                 colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.5), // Oscurece la imagen
+                  Colors.black.withOpacity(0.5),
                   BlendMode.darken,
                 ),
                 child: Image.asset(
-                  _backgroundImages[_currentImageIndex], // Imagen de senderismo
+                  _backgroundImages[_currentImageIndex],
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            // Título "SENDERISMO" y "TARATA"
             Positioned(
               top: 40,
               left: 20,
@@ -104,33 +100,32 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
                     ),
                   ),
                   Text(
-                    'TARATA', // Cambiado de "PARQUE FERIAL" a "TARATA"
+                    'TARATA',
                     style: TextStyle(
-                      fontSize: 32, // Aumenta el tamaño del texto
+                      fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFE135), // Amarillo patito
+                      color: Color(0xFFFFE135),
                       letterSpacing: 2,
                     ),
                   ),
-                  SizedBox(height: 10), // Espacio entre el título y el botón
+                  SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: _toggleContainerVisibility,
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          Color.fromARGB(255, 54, 107, 55), // Color del botón
+                          Color.fromARGB(255, 54, 107, 55),
                       padding:
                           EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       textStyle: TextStyle(fontSize: 18),
                     ),
                     child: Text(
                       'MÁS INFORMACIÓN',
-                      style: TextStyle(color: Colors.white), // Texto blanco
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ],
               ),
             ),
-            // Contenedor gris con bordes redondeados
             Positioned(
               left: 0,
               right: 0,
@@ -144,12 +139,11 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
                     decoration: BoxDecoration(
                       color: Colors.grey[900],
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0), // Bordes redondeados
+                        topLeft: Radius.circular(30.0),
                         topRight: Radius.circular(30.0),
                       ),
                     ),
-                    height: MediaQuery.of(context).size.height *
-                        0.5, // Ajuste de altura para 1/2 de la pantalla
+                    height: MediaQuery.of(context).size.height * 0.5,
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +155,7 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
-                          textAlign: TextAlign.center, // Centra el texto
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
@@ -174,15 +168,14 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
       ),
       floatingActionButton: Visibility(
         visible:
-            _isContainerVisible, // El botón de retroceso solo se muestra cuando el contenedor está visible
+            _isContainerVisible,
         child: Positioned(
           left: 20,
-          top: 40, // Posiciona el botón en la parte superior izquierda
+          top: 40,
           child: FloatingActionButton(
             backgroundColor: Colors.green,
             child: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              // Navegar a la pantalla anteriro
               Navigator.pop(context);
             },
           ),

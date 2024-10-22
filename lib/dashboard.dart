@@ -9,7 +9,7 @@ import 'main.dart';
 import 'package:video_player/video_player.dart'; 
 
 class DashboardScreen extends StatefulWidget {
-  final String? nombreUsuario; /
+  final String? nombreUsuario;
 
   DashboardScreen({this.nombreUsuario});
 

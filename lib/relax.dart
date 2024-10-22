@@ -28,7 +28,6 @@ class _RelaxScreenState extends State<RelaxScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Contenedor verde
             Container(
               width: double.infinity,
               color: const Color(0xFF406E5B),
@@ -59,7 +58,6 @@ class _RelaxScreenState extends State<RelaxScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Título del primer carrusel
             const Text(
               'Taller de cerámica y alfarería',
               style: TextStyle(
@@ -70,7 +68,6 @@ class _RelaxScreenState extends State<RelaxScreen> {
             ),
             const SizedBox(height: 10),
 
-            // Primer carrusel con botón "Ver Información"
             _buildCarouselWithOverlay(
               images: [
                 'assets/images/relax1.png',
@@ -82,7 +79,7 @@ class _RelaxScreenState extends State<RelaxScreen> {
               onTap: () {
                 setState(() {
                   _isFirstCarouselActive = !_isFirstCarouselActive;
-                  _isSecondCarouselActive = false; // Oculta el segundo carrusel
+                  _isSecondCarouselActive = false;
                 });
               },
               onInfoPressed: () {
@@ -94,7 +91,6 @@ class _RelaxScreenState extends State<RelaxScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Título del segundo carrusel
             const Text(
               'Baños termales',
               style: TextStyle(
@@ -105,7 +101,6 @@ class _RelaxScreenState extends State<RelaxScreen> {
             ),
             const SizedBox(height: 10),
 
-            // Segundo carrusel con botón "Ver Información"
             _buildCarouselWithOverlay(
               images: [
                 'assets/images/relax5.png',
@@ -119,7 +114,7 @@ class _RelaxScreenState extends State<RelaxScreen> {
               onTap: () {
                 setState(() {
                   _isSecondCarouselActive = !_isSecondCarouselActive;
-                  _isFirstCarouselActive = false; // Oculta el primer carrusel
+                  _isFirstCarouselActive = false;
                 });
               },
               onInfoPressed: () {
@@ -135,12 +130,11 @@ class _RelaxScreenState extends State<RelaxScreen> {
     );
   }
 
-  // Método para construir un carrusel con texto y botón de información
   Widget _buildCarouselWithOverlay({
     required List<String> images,
     required bool isActive,
     required VoidCallback onTap,
-    required VoidCallback onInfoPressed, // Añadido
+    required VoidCallback onInfoPressed,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -151,7 +145,7 @@ class _RelaxScreenState extends State<RelaxScreen> {
             carouselController: _carouselController,
             options: CarouselOptions(
               height: 200,
-              autoPlay: !isActive, // Detiene el carrusel si está activo
+              autoPlay: !isActive,
               autoPlayInterval: const Duration(seconds: 3),
               enlargeCenterPage: true,
             ),
@@ -159,7 +153,7 @@ class _RelaxScreenState extends State<RelaxScreen> {
           ),
           if (isActive)
             Container(
-              color: Colors.black54, // Oscurecer el fondo
+              color: Colors.black54,
               height: 200,
               alignment: Alignment.center,
               child: Column(
@@ -185,7 +179,7 @@ class _RelaxScreenState extends State<RelaxScreen> {
                       backgroundColor: const Color(0xFF406E5B),
                     ),
                     onPressed:
-                        onInfoPressed, // Llama a la función onInfoPressed
+                        onInfoPressed,
                     child: const Text(
                       'Ver Información',
                       style: TextStyle(color: Colors.white),
@@ -199,10 +193,9 @@ class _RelaxScreenState extends State<RelaxScreen> {
     );
   }
 
-  // Método reutilizable para construir contenedores de imágenes
   Widget _buildImageContainer(String imagePath) {
     return Container(
-      width: double.infinity, // Asegura que el contenedor ocupe todo el ancho
+      width: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(imagePath),

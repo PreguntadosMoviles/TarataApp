@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; // Asegúrate de tener este archivo creado e importado
-import 'main.dart'; // Importa el archivo main.dart para volver a la pantalla principal
+import 'login.dart';
+import 'main.dart';
 
 class RegistroScreen extends StatefulWidget {
   @override
@@ -17,14 +17,13 @@ class _RegistroScreenState extends State<RegistroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBE4CF), // Fondo personalizado
+      backgroundColor: Color(0xFFFBE4CF),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Parte superior con la imagen y el título
             Container(
-              height: 350, // Ajusta la altura para que la imagen sea más grande
-              width: double.infinity, // Ocupa todo el ancho de la pantalla
+              height: 350,
+              width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/background.png'),
@@ -35,7 +34,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 60, // Imagen del usuario más grande
+                    radius: 60,
                     backgroundImage: AssetImage('assets/images/user.png'),
                     backgroundColor: Colors.transparent,
                   ),
@@ -43,7 +42,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   Text(
                     'REGISTRO',
                     style: TextStyle(
-                      fontSize: 32, // Aumentar el tamaño del texto
+                      fontSize: 32,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -51,9 +50,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                 ],
               ),
             ),
-            // Espacio entre la imagen y el formulario
             SizedBox(height: 35),
-            // Formulario
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Form(
@@ -120,10 +117,9 @@ class _RegistroScreenState extends State<RegistroScreen> {
                       isPassword: true,
                     ),
                     SizedBox(height: 30),
-                    // Botón de registrar
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF3AAF7F), // Verde personalizado
+                        backgroundColor: Color(0xFF3AAF7F),
                         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -132,7 +128,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          // Mostrar el cuadro de diálogo de éxito
                           _showSuccessDialog(context);
                         }
                       },
@@ -146,21 +141,19 @@ class _RegistroScreenState extends State<RegistroScreen> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    // Botón de volver
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF406E5B), // Verde oscuro personalizado
+                        backgroundColor: Color(0xFF406E5B),
                         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
                       onPressed: () {
-                        // Navegar de vuelta al archivo main.dart
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyApp()), // Redirige a la pantalla principal
+                              builder: (context) => MyApp()),
                         );
                       },
                       child: Text(
@@ -173,7 +166,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    // Enlace para iniciar sesión
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -185,7 +177,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            // Redirigir a la pantalla de login
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -196,7 +187,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                           child: Text(
                             'Iniciar sesión',
                             style: TextStyle(
-                              color: Color(0xFF406E5B), // Verde personalizado
+                              color: Color(0xFF406E5B),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -213,7 +204,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
     );
   }
 
-  // Método para construir los campos de texto con validación
   Widget _buildTextField(String hintText, FormFieldValidator<String>? validator,
       FormFieldSetter<String>? onSaved, {bool isPassword = false}) {
     return TextFormField(
@@ -235,22 +225,21 @@ class _RegistroScreenState extends State<RegistroScreen> {
     );
   }
 
-  // Mostrar un cuadro de diálogo de éxito con fondo translúcido
   void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false, // Evita que se cierre al tocar fuera del diálogo
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Center(
           child: AlertDialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20), // Bordes redondeados
+              borderRadius: BorderRadius.circular(20),
             ),
-            backgroundColor: Colors.white.withOpacity(0.8), // Fondo translúcido
+            backgroundColor: Colors.white.withOpacity(0.8),
             title: Column(
               children: [
                 Icon(Icons.check_circle,
-                    color: Color(0xFF3AAF7F), size: 60), // Icono de éxito
+                    color: Color(0xFF3AAF7F), size: 60),
                 SizedBox(height: 16),
                 Text(
                   '¡Registro exitoso!',
@@ -288,8 +277,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pop(context); // Cerrar el cuadro de diálogo
-                    // Navegar al login después del registro exitoso
+                    Navigator.pop(context);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => LoginScreen()),

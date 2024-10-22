@@ -11,13 +11,13 @@ class Ceramica1Screen extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          // Fondo completo usando Stack
+          
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/fondorelax.jpg'),
                 fit: BoxFit
-                    .cover, // Aseguramos que la imagen cubra todo el fondo
+                    .cover, 
               ),
             ),
           ),
@@ -32,14 +32,14 @@ class Ceramica1Screen extends StatelessWidget {
                     const Text(
                       'Bienvenido al Taller de Cerámica',
                       style: TextStyle(
-                        fontSize: 28, // Tamaño de letra aumentado
+                        fontSize: 28, 
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20),
-                    // Carrusel de imágenes arriba de la información
+                    
                     _buildCarousel(),
                     const SizedBox(height: 20),
                     // Contenedor oscuro y transparente para la información
@@ -47,15 +47,15 @@ class Ceramica1Screen extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: Colors.black
-                            .withOpacity(0.5), // Color oscuro y transparente
+                            .withOpacity(0.5), 
                         borderRadius:
-                            BorderRadius.circular(10), // Bordes redondeados
+                            BorderRadius.circular(10), 
                       ),
                       child: const Text(
                         'Descubre el arte ancestral de la cerámica y la alfarería en este taller interactivo. Bajo la guía de artesanos locales, aprenderás las técnicas tradicionales para moldear y decorar piezas únicas de barro. Es una oportunidad perfecta para relajarse mientras desarrollas tu creatividad, creando recuerdos tangibles de tu visita a Tarata, todo en un ambiente tranquilo y culturalmente enriquecedor.',
                         style: TextStyle(
-                          fontSize: 18, // Tamaño de letra aumentado
-                          fontWeight: FontWeight.bold, // Texto en negrita
+                          fontSize: 18, 
+                          fontWeight: FontWeight.bold, 
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,

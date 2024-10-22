@@ -24,8 +24,8 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
           children: [
             // Parte superior con la imagen y el título
             Container(
-              height: 350, // Ajusta la altura para que la imagen sea más grande
-              width: double.infinity, // Ocupa todo el ancho de la pantalla
+              height: 350, 
+              width: double.infinity, 
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/background.png'),
@@ -36,7 +36,7 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CircleAvatar(
-                    radius: 60, // Imagen del usuario más grande
+                    radius: 60, 
                     backgroundImage: AssetImage('assets/images/user.png'),
                     backgroundColor: Colors.transparent,
                   ),
@@ -44,7 +44,7 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                   const Text(
                     'Bienvenido',
                     style: TextStyle(
-                      fontSize: 32, // Aumentar el tamaño del texto
+                      fontSize: 32, 
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -52,7 +52,7 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                 ],
               ),
             ),
-            const SizedBox(height: 20), // Espacio entre el texto y los botones
+            const SizedBox(height: 20), 
 
             // Fila de botones
             Row(
@@ -68,11 +68,11 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          const Color(0xFF406E5B), // Color de fondo
+                          const Color(0xFF406E5B),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
+                          vertical: 24), 
                       shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                          const BeveledRectangleBorder(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -81,21 +81,21 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                           'Ir a Relax',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold, 
+                            fontSize: 20, 
                           ),
                         ),
                         const SizedBox(
-                            height: 8), // Espacio entre el texto y el ícono
+                            height: 8), 
                         Image.asset(
-                          'assets/images/relax.png', // Ruta del ícono
-                          height: 36, // Tamaño del ícono
+                          'assets/images/relax.png', 
+                          height: 36, 
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(width: 10), // Espacio entre botones
+                const SizedBox(width: 10), 
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -108,9 +108,9 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406E5B),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
+                          vertical: 24), 
                       shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                          const BeveledRectangleBorder(), 
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -119,14 +119,14 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                           'Ir a Senderismo',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20, 
                           ),
                         ),
                         const SizedBox(height: 8),
                         Image.asset(
                           'assets/images/senderismo.png',
-                          height: 36, // Tamaño del ícono
+                          height: 36, 
                         ),
                       ],
                     ),
@@ -134,7 +134,7 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                 ),
               ],
             ),
-            const SizedBox(height: 10), // Espacio entre las filas
+            const SizedBox(height: 10), 
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -150,9 +150,9 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406E5B),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
+                          vertical: 24),
                       shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                          const BeveledRectangleBorder(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -161,14 +161,14 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                           'Ir a Ruta',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold, 
+                            fontSize: 20, 
                           ),
                         ),
                         const SizedBox(height: 8),
                         Image.asset(
                           'assets/images/ruta.png',
-                          height: 36, // Tamaño del ícono
+                          height: 36, 
                         ),
                       ],
                     ),
@@ -187,9 +187,9 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406E5B),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 24), // Aumento de tamaño
+                          vertical: 24), 
                       shape:
-                          const BeveledRectangleBorder(), // Bordes sin redondear
+                          const BeveledRectangleBorder(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -198,14 +198,14 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                           'Ir a Juegos',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Texto en negrita
-                            fontSize: 20, // Tamaño de letra aumentado
+                            fontWeight: FontWeight.bold, 
+                            fontSize: 20, 
                           ),
                         ),
                         const SizedBox(height: 8),
                         Image.asset(
                           'assets/images/yunga.png',
-                          height: 36, // Tamaño del ícono
+                          height: 36, 
                         ),
                       ],
                     ),
@@ -213,12 +213,12 @@ class _DashboardScreenOF extends State<DashboardScreenOF> {
                 ),
               ],
             ),
-            const SizedBox(height: 20), // Espacio entre las filas
+            const SizedBox(height: 20), 
           ],
         ),
       ),
       bottomNavigationBar: const SizedBox(
-          height: 0), // Asegura que el botón esté pegado a la base
+          height: 0), 
     );
   }
 }

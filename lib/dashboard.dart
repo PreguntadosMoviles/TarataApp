@@ -1,7 +1,6 @@
 import 'package:apptarata/mapa_tarata.dart';
 import 'package:flutter/material.dart';
 import 'mapa_tarata.dart' hide MyApp;
-import 'ruta.dart' hide MyApp;
 import 'juegos.dart' hide MyApp;
 import 'relax.dart' hide MyApp;
 import 'senderismo.dart' hide MyApp;

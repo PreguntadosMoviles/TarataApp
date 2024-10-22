@@ -6,12 +6,11 @@ import 'juegos.dart' hide MyApp;
 import 'relax.dart' hide MyApp;
 import 'senderismo.dart' hide MyApp;
 import 'main.dart'; 
-import 'package:video_player/video_player.dart'; // Importar el paquete de video_player
+import 'package:video_player/video_player.dart'; 
 
 class DashboardScreen extends StatefulWidget {
-  final String? nombreUsuario; // Parámetro opcional para el nombre de usuario
+  final String? nombreUsuario; /
 
-  // Constructor que acepta el nombre de usuario
   DashboardScreen({this.nombreUsuario});
 
   @override
@@ -26,21 +25,21 @@ class _DashboardScreen extends State<DashboardScreen> {
     super.initState();
     _controller = VideoPlayerController.asset('assets/videos/background.mp4')
       ..initialize().then((_) {
-        setState(() {}); // Actualiza el estado cuando el video esté listo
-        _controller.setLooping(true); // Para que el video se repita en bucle
-        _controller.play(); // Inicia la reproducción del video
+        setState(() {}); 
+        _controller.setLooping(true); 
+        _controller.play();
       });
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Libera el controlador cuando se destruye el widget
+    _controller.dispose(); 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Determinar el texto de bienvenida
+
     String saludo = widget.nombreUsuario != null
         ? 'Bienvenido ${widget.nombreUsuario}'
         : 'Bienvenido';
@@ -48,7 +47,6 @@ class _DashboardScreen extends State<DashboardScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Video de fondo
           _controller.value.isInitialized
               ? SizedBox.expand(
                   child: FittedBox(
@@ -60,31 +58,30 @@ class _DashboardScreen extends State<DashboardScreen> {
                     ),
                   ),
                 )
-              : Container(), // Muestra un contenedor vacío mientras el video carga
-
+              : Container(),
             Positioned(
-              bottom: 20, // Posicionar en la parte inferior
-              right: 10,  // Posicionar en la parte derecha
+              bottom: 20, 
+              right: 10,  
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF406E5B), // Verde oscuro personalizado
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Tamaño más pequeño
+                  backgroundColor: Color(0xFF406E5B),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8), 
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  minimumSize: Size(50, 50), // Tamaño mínimo similar al de un IconButton
+                  minimumSize: Size(50, 50), 
                 ),
                 onPressed: () {
                   // Redirigir a la pantalla de login
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => MyApp()), 
-                    (Route<dynamic> route) => false, // Elimina todas las rutas anteriores
+                    (Route<dynamic> route) => false, 
                   );
                 },
                 child: Icon(
                   Icons.logout,
-                  color: Colors.white, // Cambiar el color del ícono a blanco
-                  size: 24, // Tamaño del ícono más pequeño
+                  color: Colors.white, 
+                  size: 24, 
                 ),
               ),
             ),
@@ -106,7 +103,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        saludo, // Mostrar el saludo dinámico
+                        saludo, 
                         style: TextStyle(
                           fontSize: 32,
                           color: Colors.white,

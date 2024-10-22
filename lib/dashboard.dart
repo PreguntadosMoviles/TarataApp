@@ -4,7 +4,7 @@ import 'mapa_tarata.dart' hide MyApp;
 import 'juegos.dart' hide MyApp;
 import 'relax.dart' hide MyApp;
 import 'senderismo.dart' hide MyApp;
-import 'main.dart';
+import 'main.dart'; 
 import 'package:video_player/video_player.dart'; // Importar el paquete de video_player
 
 class DashboardScreen extends StatefulWidget {
@@ -70,9 +70,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                 // Redirigir a la pantalla principal (main.dart)
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          MyApp()), // Redirige a la pantalla principal
+                  MaterialPageRoute(builder: (context) => MyApp()), // Redirige a la pantalla principal
                 );
               },
               child: Icon(
@@ -156,8 +154,8 @@ class _DashboardScreen extends State<DashboardScreen> {
   }
 
   // Método para crear botones consistentes
-  Widget buildButton(BuildContext context, String label, String assetPath,
-      Widget targetScreen) {
+  Widget buildButton(
+      BuildContext context, String label, String assetPath, Widget targetScreen) {
     return SizedBox(
       width: double.infinity,
       height: 80,

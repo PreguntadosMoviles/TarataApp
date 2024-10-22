@@ -18,7 +18,8 @@ class _TermalesScreenState extends State<TermalesScreen> {
   String _temperatura = 'Cargando...';
   String _hora = 'Cargando...';
   late Timer _timer; // 1. Declaración del Timer
-
+  
+  @override
   @override
   void initState() {
     super.initState();
@@ -81,27 +82,21 @@ class _TermalesScreenState extends State<TermalesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Baños termales'),
+        title: const Text('Baños Termales'),
         backgroundColor: const Color(0xFF406E5B),
       ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            // Fondo completo usando Stack
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/fondorelax.jpg'),
-                  fit: BoxFit
-                      .cover, // Aseguramos que la imagen cubra todo el fondo
-                ),
-              ),
-            ),
-            // Contenido sobre el fondo
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/fondorelax.jpg'),
+            fit: BoxFit.cover, // Aseguramos que la imagen cubra todo el fondo
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
@@ -203,7 +198,6 @@ class _TermalesScreenState extends State<TermalesScreen> {
                 ),
               ),
             ),
-          ],
         ),
       ),
     );
@@ -221,7 +215,7 @@ class _TermalesScreenState extends State<TermalesScreen> {
       items: [
         'assets/images/relax5.png',
         'assets/images/relax6.png',
-        'assets/images/relax7.jpg',
+        'assets/images/relax7.png',
         'assets/images/relax8.jpg',
         'assets/images/relax9.jpg',
         'assets/images/relax10.jpg',

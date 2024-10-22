@@ -1,6 +1,7 @@
 import 'package:apptarata/mapa_tarata.dart';
 import 'package:flutter/material.dart';
 import 'mapa_tarata.dart' hide MyApp;
+import 'ruta.dart';
 import 'juegos.dart' hide MyApp;
 import 'relax.dart' hide MyApp;
 import 'senderismo.dart' hide MyApp;
@@ -61,25 +62,32 @@ class _DashboardScreen extends State<DashboardScreen> {
                 )
               : Container(), // Muestra un contenedor vacío mientras el video carga
 
-          // Botón de cerrar sesión en la parte superior derecha
-          Positioned(
-            top: 20,
-            right: 10,
-            child: GestureDetector(
-              onTap: () {
-                // Redirigir a la pantalla principal (main.dart)
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyApp()), // Redirige a la pantalla principal
-                );
-              },
-              child: Icon(
-                Icons.logout,
-                color: Colors.white, // Cambiar el color del ícono a blanco
-                size: 30,
+            Positioned(
+              bottom: 20, // Posicionar en la parte inferior
+              right: 10,  // Posicionar en la parte derecha
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF406E5B), // Verde oscuro personalizado
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Tamaño más pequeño
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  minimumSize: Size(50, 50), // Tamaño mínimo similar al de un IconButton
+                ),
+                onPressed: () {
+                  // Redirigir a la pantalla de login
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => MyApp()), 
+                    (Route<dynamic> route) => false, // Elimina todas las rutas anteriores
+                  );
+                },
+                child: Icon(
+                  Icons.logout,
+                  color: Colors.white, // Cambiar el color del ícono a blanco
+                  size: 24, // Tamaño del ícono más pequeño
+                ),
               ),
             ),
-          ),
 
           // Contenido sobre el video
           SingleChildScrollView(
@@ -133,7 +141,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                         context,
                         'Ir a Ruta',
                         'assets/images/ruta.png',
-                        MapaTarata(),
+                        RutaScreen(),
                       ),
                       const SizedBox(height: 10),
                       buildButton(

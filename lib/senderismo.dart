@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,8 +37,7 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
     super.initState();
     _imageChangeTimer = Timer.periodic(Duration(seconds: 3), (timer) {
       setState(() {
-        _currentImageIndex = (_currentImageIndex + 1) %
-            _backgroundImages.length;
+        _currentImageIndex = (_currentImageIndex + 1) % _backgroundImages.length;
       });
     });
   }
@@ -69,6 +67,7 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
         onTap: _hideContainer,
         child: Stack(
           children: [
+            // Fondo de imágenes cambiantes
             Positioned.fill(
               child: ColorFiltered(
                 colorFilter: ColorFilter.mode(
@@ -81,6 +80,7 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
                 ),
               ),
             ),
+            // Contenido superior
             Positioned(
               top: 40,
               left: 20,
@@ -112,8 +112,7 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
                   ElevatedButton(
                     onPressed: _toggleContainerVisibility,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Color.fromARGB(255, 54, 107, 55),
+                      backgroundColor: Color.fromARGB(255, 54, 107, 55),
                       padding:
                           EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       textStyle: TextStyle(fontSize: 18),
@@ -126,6 +125,7 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
                 ],
               ),
             ),
+            // Contenedor inferior con información
             Positioned(
               left: 0,
               right: 0,
@@ -133,32 +133,29 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
               child: AnimatedOpacity(
                 opacity: _isContainerVisible ? 1.0 : 0.0,
                 duration: Duration(milliseconds: 300),
-                child: Visibility(
-                  visible: _isContainerVisible,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0),
-                      ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
                     ),
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Explora el histórico Camino Inca, rodeado de paisajes andinos, y aventúrate a la enigmática Cueva Quala Quala, con sus fascinantes formaciones rocosas. Termina el recorrido en un sitio arqueológico, descubriendo los restos de antiguas civilizaciones que habitaron la región. Una experiencia perfecta para los amantes de la historia y la naturaleza.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
+                  ),
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Explora el histórico Camino Inca...',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -166,21 +163,15 @@ class _SenderismoScreenState extends State<SenderismoScreen> {
           ],
         ),
       ),
-      floatingActionButton: Visibility(
-        visible:
-            _isContainerVisible,
-        child: Positioned(
-          left: 20,
-          top: 40,
-          child: FloatingActionButton(
-            backgroundColor: Colors.green,
-            child: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-      ),
+      floatingActionButton: _isContainerVisible
+          ? FloatingActionButton(
+              backgroundColor: Colors.green,
+              child: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          : null, // Solo mostrar el botón si el contenedor es visible
     );
   }
 }

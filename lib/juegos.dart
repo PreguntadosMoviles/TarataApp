@@ -36,7 +36,6 @@ class ParqueFerialScreen extends StatelessWidget {
           // Contenido superpuesto
           Column(
             children: [
-              
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
                 child: Text(
@@ -102,8 +101,7 @@ class ParqueFerialScreen extends StatelessWidget {
                   ),
                 ),
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height *
-                    0.3, 
+                height: MediaQuery.of(context).size.height * 0.3, 
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -122,13 +120,12 @@ class ParqueFerialScreen extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                         textStyle: TextStyle(fontSize: 18),
                       ),
                       child: Text(
                         'MÁS INFORMACIÓN',
-                        style: TextStyle(color: Colors.white), // Texto blanco
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
@@ -139,8 +136,7 @@ class ParqueFerialScreen extends StatelessWidget {
           // Botones de precios y galería elevados
           Positioned(
             left: 10,
-            top: MediaQuery.of(context).size.height *
-                0.4, 
+            top: MediaQuery.of(context).size.height * 0.4,
             child: Column(
               children: [
                 IconButton(
@@ -159,8 +155,7 @@ class ParqueFerialScreen extends StatelessWidget {
           ),
           Positioned(
             right: 10,
-            top: MediaQuery.of(context).size.height *
-                0.4, 
+            top: MediaQuery.of(context).size.height * 0.4,
             child: Column(
               children: [
                 IconButton(
@@ -179,16 +174,12 @@ class ParqueFerialScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: Positioned(
-        left: 20,
-        top: 40, 
-        child: FloatingActionButton(
-          backgroundColor: Colors.green,
-          child: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        child: Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }

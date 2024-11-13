@@ -53,55 +53,55 @@ class _ParqueFerialScreenState extends State<ParqueFerialScreen> {
   };
   final Map<String, String> _attractionInfo = {
     "PUENTE TIBETANO": """
-**Descripción General:**
+Descripción General:
 El Puente Tibetano es una emocionante aventura a gran altura que desafía tu valentía y equilibrio. Cruzar este puente te permitirá disfrutar de vistas espectaculares del entorno natural.
 
-**Actividades:**
-- **Cruzando el Puente:** Camina sobre el estrecho puente suspendido entre dos pilares, sintiendo la adrenalina mientras te desplazas sobre el vacío.
-- **Fotografía Panorámica:** Aprovecha los puntos estratégicos para capturar impresionantes fotografías del paisaje.
-- **Desafío de Equilibrio:** Participa en competencias amistosas para ver quién puede cruzar el puente con el mejor equilibrio.
+Actividades:
+- Cruzando el Puente: Camina sobre el estrecho puente suspendido entre dos pilares, sintiendo la adrenalina mientras te desplazas sobre el vacío.
+- Fotografía Panorámica: Aprovecha los puntos estratégicos para capturar impresionantes fotografías del paisaje.
+- Desafío de Equilibrio: Participa en competencias amistosas para ver quién puede cruzar el puente con el mejor equilibrio.
 
-**Consejos:**
+Consejos:
 - Usa ropa cómoda y zapatos adecuados para caminar.
 - No es necesario tener experiencia previa, pero se recomienda mantener la calma y seguir las indicaciones de los guías.
 """,
     "COLUMPIO EXTREMO": """
-**Descripción General:**
+Descripción General:
 El Columpio Extremo es una experiencia única que combina la emoción del balanceo con vistas panorámicas de la naturaleza circundante. Es ideal para quienes buscan una dosis extra de adrenalina.
 
-**Actividades:**
-- **Balanceo de Alta Altura:** Siente la emoción mientras te balanceas a alturas impresionantes, disfrutando de la brisa y las vistas.
-- **Retos de Tiempo:** Participa en retos para ver cuánto tiempo puedes mantener el balanceo sin perder la coordinación.
-- **Fotografía en Movimiento:** Captura momentos dinámicos mientras te balanceas, creando recuerdos inolvidables.
+Actividades:
+- Balanceo de Alta Altura: Siente la emoción mientras te balanceas a alturas impresionantes, disfrutando de la brisa y las vistas.
+- Retos de Tiempo: Participa en retos para ver cuánto tiempo puedes mantener el balanceo sin perder la coordinación.
+- Fotografía en Movimiento: Captura momentos dinámicos mientras te balanceas, creando recuerdos inolvidables.
 
-**Consejos:**
+Consejos:
 - Mantén los brazos y las piernas en posición para un balanceo más estable.
 - Escucha las instrucciones de los operadores para garantizar tu seguridad.
 """,
     "ZIPLINE BIKE": """
-**Descripción General:**
+Descripción General:
 La Zipline Bike es una innovadora combinación de ciclismo y tirolesa. Esta atracción te permite deslizarte a gran velocidad mientras pedaleas, ofreciendo una experiencia única y emocionante.
 
-**Actividades:**
-- **Deslizamiento en Zipline:** Conecta tu bicicleta a la tirolesa y deslízate por el aire, sintiendo la velocidad y la libertad.
-- **Carreras de Zipline:** Compite contra otros participantes en emocionantes carreras de zipline bike.
-- **Técnicas de Ciclismo Aéreo:** Aprende y practica técnicas avanzadas de ciclismo mientras te desplazas por la tirolesa.
+Actividades:
+- Deslizamiento en Zipline: Conecta tu bicicleta a la tirolesa y deslízate por el aire, sintiendo la velocidad y la libertad.
+- Carreras de Zipline: Compite contra otros participantes en emocionantes carreras de zipline bike.
+- Técnicas de Ciclismo Aéreo: Aprende y practica técnicas avanzadas de ciclismo mientras te desplazas por la tirolesa.
 
-**Consejos:**
+Consejos:
 - Asegúrate de que tu bicicleta esté bien sujeta antes de comenzar.
 - Usa equipo de protección adecuado proporcionado por el parque.
 - Mantén la concentración durante todo el recorrido para garantizar una experiencia segura.
 """,
     "CANOPY": """
-**Descripción General:**
+Descripción General:
 El Canopy te ofrece una emocionante travesía por las copas de los árboles, combinando velocidad y vistas panorámicas. Es perfecto para los amantes de la naturaleza y la aventura.
 
-**Actividades:**
-- **Tirolesa de Alta Velocidad:** Deslízate a través del canopy a velocidades emocionantes, disfrutando de la vista desde las alturas.
-- **Exploración de Senderos Elevados:** Camina por senderos suspendidos entre los árboles, explorando la biodiversidad del área.
-- **Fotografía del Ecosistema:** Captura imágenes de la flora y fauna desde perspectivas únicas y elevadas.
+Actividades:
+- Tirolesa de Alta Velocidad: Deslízate a través del canopy a velocidades emocionantes, disfrutando de la vista desde las alturas.
+- Exploración de Senderos Elevados: Camina por senderos suspendidos entre los árboles, explorando la biodiversidad del área.
+- Fotografía del Ecosistema: Captura imágenes de la flora y fauna desde perspectivas únicas y elevadas.
 
-**Consejos:**
+Consejos:
 - Sigue las instrucciones de los guías para una experiencia segura.
 - Mantén un ritmo constante durante el deslizamiento para maximizar la seguridad y la diversión.
 - Disfruta de las vistas y la tranquilidad del entorno natural mientras te desplazas por el canopy.
@@ -207,7 +207,7 @@ El Canopy te ofrece una emocionante travesía por las copas de los árboles, com
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.yellowAccent),
+                                color: const Color.fromARGB(255, 252, 227, 38)),
                           ),
                           SizedBox(height: 8),
                           Text(

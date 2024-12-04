@@ -1,17 +1,19 @@
-import 'package:apptarata/mapa_tarata.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'mapa_tarata.dart' hide MyApp;
 import 'ruta.dart';
 import 'juegos.dart' hide MyApp;
 import 'relax.dart' hide MyApp;
 import 'senderismo.dart' hide MyApp;
-import 'main.dart'; 
-import 'package:video_player/video_player.dart'; 
+import 'main.dart';
+import 'package:video_player/video_player.dart';
 
 class DashboardScreen extends StatefulWidget {
   final String? nombreUsuario;
+  final bool isOffline; // Parámetro para identificar si es modo desconectado
 
-  DashboardScreen({this.nombreUsuario});
+  DashboardScreen({this.nombreUsuario, this.isOffline = false});
 
   @override
   _DashboardScreen createState() => _DashboardScreen();
@@ -19,30 +21,65 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreen extends State<DashboardScreen> {
   late VideoPlayerController _controller;
+  String? _nombreUsuario;
+  String? _emailUsuario;
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.asset('assets/videos/background.mp4')
       ..initialize().then((_) {
-        setState(() {}); 
-        _controller.setLooping(true); 
+        setState(() {});
+        _controller.setLooping(true);
         _controller.play();
       });
+    if (!widget.isOffline) {
+      _getUserData();  // Solo obtener los datos si el usuario está conectado
+    }
+  }
+
+  // Función para obtener los datos del usuario desde Firestore
+  Future<void> _getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _emailUsuario = user.email;
+      });
+
+      // Obtener nombre del usuario desde Firestore
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.email)
+          .get();
+      
+      if (doc.exists) {
+        setState(() {
+          _nombreUsuario = doc['nombre'];  // Asegúrate de tener el campo 'nombre' en Firestore
+        });
+      }
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose(); 
+    _controller.dispose();
     super.dispose();
+  }
+
+  // Método para hacer logout
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();  // Cerrar sesión en Firebase
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => MyApp()),  // Redirigir al login
+      (Route<dynamic> route) => false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
-    String saludo = widget.nombreUsuario != null
-        ? 'Bienvenido ${widget.nombreUsuario}'
-        : 'Bienvenido';
+    String saludo = widget.isOffline
+        ? 'Bienvenido (Modo Desconectado)'
+        : (_nombreUsuario != null ? 'Bienvenido $_nombreUsuario' : 'Bienvenido');
 
     return Scaffold(
       body: Stack(
@@ -59,33 +96,26 @@ class _DashboardScreen extends State<DashboardScreen> {
                   ),
                 )
               : Container(),
-            Positioned(
-              bottom: 20, 
-              right: 10,  
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF406E5B),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8), 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  minimumSize: Size(50, 50), 
+          Positioned(
+            bottom: 20,
+            right: 10,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF406E5B),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                onPressed: () {
-                  // Redirigir a la pantalla de login
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => MyApp()), 
-                    (Route<dynamic> route) => false, 
-                  );
-                },
-                child: Icon(
-                  Icons.logout,
-                  color: Colors.white, 
-                  size: 24, 
-                ),
+                minimumSize: Size(50, 50),
+              ),
+              onPressed: _logout,  // Llamamos al método logout
+              child: Icon(
+                Icons.logout,
+                color: Colors.white,
+                size: 24,
               ),
             ),
-
+          ),
           // Contenido sobre el video
           SingleChildScrollView(
             child: Column(
@@ -103,7 +133,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        saludo, 
+                        saludo,
                         style: TextStyle(
                           fontSize: 32,
                           color: Colors.white,
@@ -114,7 +144,6 @@ class _DashboardScreen extends State<DashboardScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
                 // Disposición vertical de los botones
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),

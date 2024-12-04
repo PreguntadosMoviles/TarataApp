@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "627167711839",
+    "project_id": "taratours-4f7dc",
+    "storage_bucket": "taratours-4f7dc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627167711839:android:24acf2b1237a2636f281ea",
+        "android_client_info": {
+          "package_name": "com.taratours.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1BcfBbxs5luGy7O1Ptnpn2fIW1-ooH2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

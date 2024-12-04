@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Importa Firestore
 import 'login.dart';
 import 'main.dart';
 
@@ -9,10 +11,20 @@ class RegistroScreen extends StatefulWidget {
 
 class _RegistroScreenState extends State<RegistroScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
   String _nombreCompleto = '';
   String _email = '';
   String _contrasena = '';
   String _confirmarContrasena = '';
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +70,10 @@ class _RegistroScreenState extends State<RegistroScreen> {
                 child: Column(
                   children: [
                     _buildTextField(
-                      'Ingrese su nombre completo',
+                      'Ingrese su nombre',
                       (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese su nombre completo';
+                          return 'Por favor ingrese su nombre';
                         }
                         return null;
                       },
@@ -77,7 +89,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                           return 'Por favor ingrese su email';
                         }
                         if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Por favor ingrese un email válido';
+                          return 'Por favor ingrese un correo válido';
                         }
                         return null;
                       },
@@ -101,6 +113,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                         _contrasena = value!;
                       },
                       isPassword: true,
+                      controller: _passwordController,
                     ),
                     SizedBox(height: 16),
                     _buildTextField(
@@ -109,26 +122,68 @@ class _RegistroScreenState extends State<RegistroScreen> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor confirme su contraseña';
                         }
+                        if (value != _passwordController.text) {
+                          return 'Las contraseñas no coinciden';
+                        }
                         return null;
                       },
                       (value) {
                         _confirmarContrasena = value!;
                       },
                       isPassword: true,
+                      controller: _confirmPasswordController,
                     ),
                     SizedBox(height: 30),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF3AAF7F),
-                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          _showSuccessDialog(context);
+
+                          try {
+                            // Crear el usuario con FirebaseAuth
+                            UserCredential userCredential = await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                              email: _email,
+                              password: _contrasena,
+                            );
+
+                            // Guardar el nombre en Firestore
+                            await FirebaseFirestore.instance.collection('users')
+                                .doc(userCredential.user!.email) // Usamos el email como ID
+                                .set({
+                              'nombre': _nombreCompleto,
+                              'email': _email,
+                            });
+
+                            // Mostrar diálogo de éxito
+                            _showSuccessDialog(context);
+                          } on FirebaseAuthException catch (e) {
+                            String errorMessage;
+                            switch (e.code) {
+                              case 'email-already-in-use':
+                                errorMessage = 'El correo electrónico ya está en uso.';
+                                break;
+                              case 'weak-password':
+                                errorMessage = 'La contraseña es demasiado débil.';
+                                break;
+                              case 'invalid-email':
+                                errorMessage = 'El correo electrónico no es válido.';
+                                break;
+                              default:
+                                errorMessage = 'Ocurrió un error inesperado.';
+                            }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(errorMessage)),
+                            );
+                          }
                         }
                       },
                       child: Text(
@@ -144,7 +199,8 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF406E5B),
-                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -152,8 +208,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => MyApp()),
+                          MaterialPageRoute(builder: (context) => MyApp()),
                         );
                       },
                       child: Text(
@@ -205,9 +260,10 @@ class _RegistroScreenState extends State<RegistroScreen> {
   }
 
   Widget _buildTextField(String hintText, FormFieldValidator<String>? validator,
-      FormFieldSetter<String>? onSaved, {bool isPassword = false}) {
+      FormFieldSetter<String>? onSaved, {bool isPassword = false, TextEditingController? controller}) {
     return TextFormField(
       obscureText: isPassword,
+      controller: controller,
       style: TextStyle(color: Colors.black),
       decoration: InputDecoration(
         hintText: hintText,

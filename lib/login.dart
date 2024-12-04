@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'registro.dart';
+import 'package:firebase_auth/firebase_auth.dart';  // Importar Firebase Auth
 import 'dashboard.dart';
-import 'recuperarPassword.dart'; 
-import 'main.dart'; 
+import 'registro.dart';
+import 'recuperarPassword.dart';
+import 'main.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,17 +14,18 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBE4CF), 
+      backgroundColor: Color(0xFFFBE4CF),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: 350, 
-              width: double.infinity, 
+              height: 350,
+              width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/background.png'),
@@ -34,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 60, 
+                    radius: 60,
                     backgroundImage: AssetImage('assets/images/user.png'),
                     backgroundColor: Colors.transparent,
                   ),
@@ -42,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'INICIA SESIÓN',
                     style: TextStyle(
-                      fontSize: 32, 
+                      fontSize: 32,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -89,21 +91,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 30),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF3AAF7F), 
+                        backgroundColor: Color(0xFF3AAF7F),
                         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => DashboardScreen()),
-                          );
-                        }
-                      },
+                      onPressed: _login,
                       child: Text(
                         'INICIAR',
                         style: TextStyle(
@@ -116,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF406E5B), 
+                        backgroundColor: Color(0xFF406E5B),
                         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -125,8 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => MyApp()), 
+                          MaterialPageRoute(builder: (context) => MyApp()),
                         );
                       },
                       child: Text(
@@ -160,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             'Registrate',
                             style: TextStyle(
-                              color: Color(0xFF406E5B), 
+                              color: Color(0xFF406E5B),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -179,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         '¿Olvidó su contraseña?',
                         style: TextStyle(
-                          color: Color(0xFF406E5B), 
+                          color: Color(0xFF406E5B),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -213,5 +206,37 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: validator,
       onSaved: onSaved,
     );
+  }
+
+  // Método de login
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      try {
+        // Intentamos autenticar al usuario con FirebaseAuth
+        final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _email,
+          password: _password,
+        );
+
+        // Si el login es exitoso, redirigimos al Dashboard
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+      } on FirebaseAuthException catch (e) {
+        String errorMessage = 'Error desconocido';
+        if (e.code == 'user-not-found') {
+          errorMessage = 'No se encontró ningún usuario con este correo';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'La contraseña es incorrecta';
+        }
+        // Mostramos el error en un SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      }
+    }
   }
 }

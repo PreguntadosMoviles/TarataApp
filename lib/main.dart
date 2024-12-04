@@ -5,8 +5,11 @@ import 'registro.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await Firebase.initializeApp(); // Inicializar Firebase antes de ejecutar la app
   runApp(MyApp());
 }
 
@@ -48,7 +51,6 @@ class _SplashScreenState extends State<SplashScreen> {
         setState(
             () {}); 
       });
-
 
     Timer.periodic(Duration(seconds: 5), (Timer timer) {
       if (_currentPage < 2) {

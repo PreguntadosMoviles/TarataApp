@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MapaTarata extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class MapaTarata extends StatefulWidget {
 
 class _MapaTarataState extends State<MapaTarata> {
   late GoogleMapController _mapController;
-  LatLng _initialPosition = LatLng(-18.006680899903547, -70.22713187454809); // Coordenadas específicas
+  LatLng _initialPosition = LatLng(0.0, 0.0); // Coordenadas iniciales vacías
   Marker? _marker;
   IconData _iconoCentral = Icons.home;
   String _temperatura = 'Cargando...';
@@ -22,7 +23,7 @@ class _MapaTarataState extends State<MapaTarata> {
   @override
   void initState() {
     super.initState();
-    _setMarkerAndWeather(_initialPosition); // Establecer marcador y clima al iniciar
+    _getCurrentLocation(); // Obtener la ubicación actual al iniciar
     Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         _hora = TimeOfDay.now().format(context);
@@ -30,11 +31,43 @@ class _MapaTarataState extends State<MapaTarata> {
     });
   }
 
+  // Método para obtener la ubicación actual
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Verifica si los servicios de localización están habilitados
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Si los servicios no están habilitados, muestra un mensaje y sale
+      return;
+    }
+
+    // Verifica los permisos de ubicación
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      // Si el permiso está denegado, solicita el permiso
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+
+    // Obtiene la ubicación actual
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    // Actualiza la posición inicial con la ubicación obtenida
+    setState(() {
+      _initialPosition = LatLng(position.latitude, position.longitude);
+      _setMarkerAndWeather(_initialPosition); // Establecer marcador y clima
+    });
+  }
+
   void _setMarkerAndWeather(LatLng location) {
     _marker = Marker(
-      markerId: MarkerId('specifiedLocation'),
+      markerId: MarkerId('currentLocation'),
       position: location,
-      infoWindow: InfoWindow(title: 'Ubicación Especificada'),
+      infoWindow: InfoWindow(title: 'Ubicación Actual'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
     );
 
@@ -175,10 +208,10 @@ class _MapaTarataState extends State<MapaTarata> {
                   mainAxisSpacing: 10,
                   childAspectRatio: 1.8,
                   children: [
-                    _buildLocationButton('Plaza', LatLng(-17.474622343888903, -70.03224877351491), Icons.location_city),
-                    _buildLocationButton('Mercado', LatLng(-17.475491685082943, -70.0313025044189), Icons.shopping_cart),
-                    _buildLocationButton('Iglesia Tarucachi', LatLng(-17.522411446211972, -70.02899311937927), Icons.church),
-                    _buildLocationButton('Municipalidad Provincial', LatLng(-17.447941219604804, -70.03147924152483), Icons.apartment),
+                    _buildLocationButton('Plaza', LatLng(-17.47441167642077, -70.03143642188739), Icons.location_city),
+                    _buildLocationButton('Mercado', LatLng(-17.47548621305333, -70.03129694701204), Icons.shopping_cart),
+                    _buildLocationButton('Iglesia Tarucachi', LatLng(-17.526395986397954, -70.02885748446944), Icons.church),
+                    _buildLocationButton('Municipalidad Provincial', LatLng(-17.47494266492219, -70.03169623007938), Icons.apartment),
                   ],
                 ),
               ),
@@ -233,84 +266,38 @@ class _MapaTarataState extends State<MapaTarata> {
     );
   }
 
-  void _showRoute(LatLng destination) async {
-    final googlePoints = PolylinePoints();
-    List<LatLng> polylineCoordinates = [];
+void _showRoute(LatLng destination) async {
+  List<LatLng> polylineCoordinates = [];
 
-    // Reemplaza con tu API Key de Google
-    String googleApiKey = 'AIzaSyDYMS4cdyIBc8Y9bzrNNM8G8UI69rzS04U';
+  // Crear el objeto PolylineRequest
+  PolylineRequest routeRequest = PolylineRequest(
+    origin: PointLatLng(_initialPosition.latitude, _initialPosition.longitude),
+    destination: PointLatLng(destination.latitude, destination.longitude),
+    mode: TravelMode.walking,  // Usamos "walking" para el modo de transporte
+  );
 
-    // Construir la URL para la Directions API
-    String url = 'https://maps.googleapis.com/maps/api/directions/json?origin=${_initialPosition.latitude},${_initialPosition.longitude}&destination=${destination.latitude},${destination.longitude}&key=$googleApiKey';
-    print(url); // Imprimir la URL para verificación
+  // Llamar a getRouteBetweenCoordinates pasando el request como argumento
+  PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
+    request: routeRequest,
+    googleApiKey: 'AIzaSyDYMS4cdyIBc8Y9bzrNNM8G8UI69rzS04U',  // Reemplaza con tu clave de API de Google Maps
+  );
 
-    // Realizar la solicitud a la Directions API
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      if (data['status'] == 'OK') {
-        // Obtener las coordenadas de la ruta
-        for (var step in data['routes'][0]['legs'][0]['steps']) {
-          // Obtener los puntos de la ruta utilizando "polyline"
-          var polyline = step['polyline']['points'];
-          polylineCoordinates.addAll(_convertToLatLng(polyline));
-        }
-
-        // Limpiar las polilíneas antes de agregar la nueva
-        _polylines.clear();
-
-        // Crear la nueva polilínea
-        Polyline polyline = Polyline(
-          polylineId: PolylineId('route'),
-          color: Colors.blue,
-          points: polylineCoordinates,
-          width: 5,
-        );
-
-        // Agregar la polilínea al conjunto
-        _polylines.add(polyline);
-
-        // Actualizar el estado para reflejar los cambios
-        setState(() {});
-      }
-    }
+  if (result.status == "OK") {
+    // Agregar solo los puntos de la ruta calculada
+    polylineCoordinates.addAll(result.points.map((point) =>
+        LatLng(point.latitude, point.longitude)));
   }
 
-  List<LatLng> _convertToLatLng(String encoded) {
-    List<LatLng> coordinates = [];
-    List<int> offsets = [];
-    int index = 0, len = encoded.length;
-    int lat = 0, lng = 0;
-
-    while (index < len) {
-      int b;
-      int shift = 0;
-      int result = 0;
-
-      do {
-        b = encoded.codeUnitAt(index++) - 63;
-        result |= (b & 0x1f) << shift;
-        shift += 5;
-      } while (b >= 0x20);
-
-      int dlat = (result >> 1) ^ -(result & 1);
-      lat += dlat;
-
-      shift = 0;
-      result = 0;
-
-      do {
-        b = encoded.codeUnitAt(index++) - 63;
-        result |= (b & 0x1f) << shift;
-        shift += 5;
-      } while (b >= 0x20);
-
-      int dlng = (result >> 1) ^ -(result & 1);
-      lng += dlng;
-
-      LatLng latLng = LatLng(lat / 1E5, lng / 1E5);
-      coordinates.add(latLng);
-    }
-    return coordinates;
-  }
+  setState(() {
+    _polylines.clear();  // Limpiar las líneas anteriores
+    _polylines.add(Polyline(
+      polylineId: PolylineId('route'),
+      visible: true,
+      points: polylineCoordinates,
+      width: 4,
+      color: Colors.blue,
+      geodesic: true,
+    ));
+  });
+}
 }

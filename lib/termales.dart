@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:convert';
 import 'dart:async';
 
 class TermalesScreen extends StatefulWidget {
+  final bool isOffline; // Bandera para indicar modo desconectado
+
+  TermalesScreen({this.isOffline = false});
+
   @override
   _TermalesScreenState createState() => _TermalesScreenState();
 }
@@ -18,13 +23,15 @@ class _TermalesScreenState extends State<TermalesScreen> {
   String _temperatura = 'Cargando...';
   String _hora = 'Cargando...';
   late Timer _timer;
-  
-  @override
+  bool _hasInternet = true; // Variable para detectar conexión
+
   @override
   void initState() {
     super.initState();
-    _setMarkerAndWeather(
-        _initialPosition);
+    _setMarkerAndWeather(_initialPosition);
+
+    _checkInternetConnection(); // Verificar conexión a Internet
+
     _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
       if (mounted) {
         setState(() {
@@ -32,6 +39,23 @@ class _TermalesScreenState extends State<TermalesScreen> {
         });
       }
     });
+  }
+
+  // Verificar conexión a Internet
+  Future<void> _checkInternetConnection() async {
+    if (widget.isOffline) {
+      setState(() {
+        _hasInternet = false;
+      });
+      print('Modo desconectado habilitado');
+      return;
+    }
+
+    final connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _hasInternet = connectivityResult != ConnectivityResult.none;
+    });
+    print('Conexión a Internet: $_hasInternet');
   }
 
   @override
@@ -42,14 +66,20 @@ class _TermalesScreenState extends State<TermalesScreen> {
   }
 
   void _setMarkerAndWeather(LatLng location) {
-    _marker = Marker(
-      markerId: MarkerId('specifiedLocation'),
-      position: location,
-      infoWindow: InfoWindow(title: 'Ubicación Especificada'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-    );
-
-    _getWeather(location);
+    if (widget.isOffline || !_hasInternet) {
+      setState(() {
+        _marker = null;
+        _temperatura = 'Sin datos';
+      });
+    } else {
+      _marker = Marker(
+        markerId: MarkerId('specifiedLocation'),
+        position: location,
+        infoWindow: InfoWindow(title: 'Ubicación Especificada'),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+      );
+      _getWeather(location);
+    }
   }
 
   Future<void> _getWeather(LatLng location) async {
@@ -96,104 +126,123 @@ class _TermalesScreenState extends State<TermalesScreen> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Bienvenido a los baños termales',
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Bienvenido a los baños termales',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  _buildCarousel(),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Text(
+                      'Ubicados en un entorno natural privilegiado, los Baños Termales de Putina ofrecen una experiencia relajante y revitalizante. Sus aguas termales, ricas en minerales, son conocidas por sus propiedades curativas, perfectas para aliviar el estrés y revitalizar el cuerpo. Rodeado de naturaleza, este lugar es ideal para desconectarse y disfrutar de momentos de paz y tranquilidad en plena conexión con el entorno andino.',
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 20),
-                    _buildCarousel(),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.black
-                            .withOpacity(0.5),
-                        borderRadius:
-                            BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Ubicados en un entorno natural privilegiado, los Baños Termales de Putina ofrecen una experiencia relajante y revitalizante. Sus aguas termales, ricas en minerales, son conocidas por sus propiedades curativas, perfectas para aliviar el estrés y revitalizar el cuerpo. Rodeado de naturaleza, este lugar es ideal para desconectarse y disfrutar de momentos de paz y tranquilidad en plena conexión con el entorno andino.',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  color: Color(0xFF868973),
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Text(
-                                    _temperatura,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  color: Color(0xFF636560),
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Text(
-                                    _hora,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 250,
-                            width: double.infinity,
-                            child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                target: _initialPosition,
-                                zoom: 14.0,
-                              ),
-                              onMapCreated: (controller) {
-                                _mapController = controller;
-                                setState(() {
-                                  _mapController.animateCamera(
-                                      CameraUpdate.newLatLng(_initialPosition));
-                                });
-                              },
-                              markers: _marker != null ? {_marker!} : {},
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  _hasInternet
+                      ? _buildWeatherAndMap() // Mostrar el contenido normal
+                      : _buildOfflineImage(), // Mostrar imagen en modo desconectado
+                ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWeatherAndMap() {
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Color(0xFF868973),
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    _temperatura,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Color(0xFF636560),
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    _hora,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            height: 250,
+            width: double.infinity,
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: _initialPosition,
+                zoom: 14.0,
+              ),
+              onMapCreated: (controller) {
+                _mapController = controller;
+                setState(() {
+                  _mapController.animateCamera(
+                      CameraUpdate.newLatLng(_initialPosition));
+                });
+              },
+              markers: _marker != null ? {_marker!} : {},
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOfflineImage() {
+    print('Mostrando imagen en modo desconectado');
+    return Container(
+      height: 250,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          image: AssetImage('assets/images/termales_offline.png'),
+          fit: BoxFit.cover,
         ),
       ),
     );

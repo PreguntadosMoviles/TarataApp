@@ -75,6 +75,9 @@ class _RegistroScreenState extends State<RegistroScreen> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor ingrese su nombre';
                         }
+                        if (value.contains(' ')) {
+                          return 'El nombre no debe contener espacios';
+                        }
                         return null;
                       },
                       (value) {

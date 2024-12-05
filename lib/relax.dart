@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'ceramica.dart';
 import 'termales.dart';
-import 'ceramica1.dart';
-import 'termales1.dart';
 
 class RelaxScreen extends StatefulWidget {
   @override

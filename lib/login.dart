@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';  // Importar Firebase Auth
 import 'dashboard.dart';
 import 'registro.dart';
-import 'recuperarPassword.dart';
+import 'solicitar_correo.dart';
 import 'main.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RecuperarPasswordScreen(),
+                            builder: (context) => SolicitarCorreoScreen(),
                           ),
                         );
                       },

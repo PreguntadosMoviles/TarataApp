@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -351,6 +352,24 @@ Consejos:
               // Contenido superpuesto
               Column(
                 children: [
+                  // Botón de ubicación justo encima del título del juego
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0), // Menos espacio
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.location_on, color: Colors.white, size: 48),
+                          onPressed: () {
+                            _showLocationModal(context, index); // Pasamos el índice para cambiar la ubicación
+                          },
+                        ),
+                        Text(
+                          'Ubicación',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 40.0),
                     child: Text(
@@ -503,6 +522,44 @@ Consejos:
           Navigator.pop(context);
         },
       ),
+    );
+  }
+
+  // Función para mostrar el modal con el mapa, cambiando la ubicación según el índice
+  void _showLocationModal(BuildContext context, int index) {
+    // Definimos ubicaciones para diferentes juegos (referenciales por el momento)
+    List<LatLng> locations = [
+      LatLng(-17.47915431418651, -70.03330397447927),  // Ejemplo para un juego
+      LatLng(-17.47526556326037, -70.03562140317769),  // Ejemplo para otro juego
+      LatLng(-17.482715518443243, -70.03647971010302),
+      LatLng(-17.48124192513648, -70.03343272051806),  // Ejemplo para otro juego
+    ];
+    
+    // Mostrar el modal con el mapa correspondiente a la ubicación del juego
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Container(
+            height: 400,
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: locations[index], // Ubicación dinámica según el índice
+                zoom: 15,
+              ),
+              markers: {
+                Marker(
+                  markerId: MarkerId('1'),
+                  position: locations[index], // Ubicación dinámica según el índice
+                  infoWindow: InfoWindow(title: 'Ubicación del Juego'),
+                ),
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -14,7 +14,6 @@ class _SolicitarCorreoScreenState extends State<SolicitarCorreoScreen> {
 
   Future<void> _sendPasswordResetEmail() async {
     try {
-      // Verificar si el correo existe en Firestore
       var userSnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(_email)
@@ -99,56 +98,72 @@ class _SolicitarCorreoScreenState extends State<SolicitarCorreoScreen> {
     );
   }
 
+  Widget _buildTextField(String hintText, FormFieldValidator<String>? validator,
+      FormFieldSetter<String>? onSaved) {
+    return TextFormField(
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.black),
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.9),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      ),
+      validator: validator,
+      onSaved: onSaved,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFBE4CF),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Container(
-                height: 350,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/background.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage('assets/images/user.png'),
-                      backgroundColor: Colors.transparent,
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Recuperar Contraseña',
-                      style: TextStyle(
-                        fontSize: 32,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+        child: Column(
+          children: [
+            Container(
+              height: 350,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/background.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 35),
-              Form(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/images/user.png'),
+                    backgroundColor: Colors.transparent,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'RECUPERAR CONTRASEÑA',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Correo Electrónico',
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
+                    _buildTextField(
+                      'Ingrese su correo electrónico',
+                      (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor ingrese su correo electrónico';
                         }
@@ -157,29 +172,63 @@ class _SolicitarCorreoScreenState extends State<SolicitarCorreoScreen> {
                         }
                         return null;
                       },
-                      onSaved: (value) => _email = value!,
+                      (value) {
+                        _email = value!;
+                      },
                     ),
                     SizedBox(height: 30),
                     ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          _sendPasswordResetEmail(); // Enviar el correo
-                        }
-                      },
-                      child: Text('Enviar Código'),
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF3AAF7F),
                         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          _sendPasswordResetEmail();
+                        }
+                      },
+                      child: Text(
+                        'ENVIAR',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF406E5B),
+                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                        );
+                      },
+                      child: Text(
+                        'VOLVER',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

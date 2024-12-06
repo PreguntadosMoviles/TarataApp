@@ -6,9 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Inicializar Firebase antes de ejecutar la app
   runApp(MyApp());
 }
@@ -34,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
   late PageController _pageController;
   late Timer _timer; // Variable para almacenar el Timer
   int _currentPage = 0;
+  bool _hasInternet = true; // Variable para verificar la conexión a internet
   final List<String> _texts = [
     'WELCOME TO\nTARATA',
     'BIENVENIDO A\nTARATA',
@@ -51,6 +53,8 @@ class _SplashScreenState extends State<SplashScreen> {
         _controller.play();
         setState(() {});
       });
+
+    _checkInternetConnection(); // Comprobar la conexión a internet
 
     // Inicializar y almacenar el Timer
     _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
@@ -71,11 +75,23 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
-    // Cancelar el Timer
     _timer.cancel();
     _controller.dispose();
     _pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> _checkInternetConnection() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _hasInternet = connectivityResult != ConnectivityResult.none;
+    });
+
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      setState(() {
+        _hasInternet = result != ConnectivityResult.none;
+      });
+    });
   }
 
   @override
@@ -215,12 +231,15 @@ class _SplashScreenState extends State<SplashScreen> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DashboardScreen()),
-                      );
-                    },
+                    onPressed: _hasInternet
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashboardScreen()),
+                            );
+                          },
                     child: const Text(
                       'Ingresar en modo desconectado',
                       style: TextStyle(

@@ -236,7 +236,7 @@ void _drawRoute() async {
                   children: [
                     Text(
                       _isExpanded
-                          ? 'Explora el histórico Camino Inca, rodeado de paisajes andinos...'
+                          ? 'Explora el histórico Camino Inca, rodeado de paisajes andinos, y aventúrate a la enigmática Cueva Quala Quala, con sus fascinantes formaciones rocosas. Termina el recorrido en un sitio arqueológico, descubriendo los restos de antiguas civilizaciones que habitaron la región. Una experiencia perfecta para los amantes de la historia y la naturaleza.'
                           : 'Explora el histórico Camino Inca...',
                       style: TextStyle(
                         color: Colors.white,
